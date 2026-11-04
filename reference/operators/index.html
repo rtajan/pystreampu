@@ -1,0 +1,5364 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Python interface of the StreamPU DSEL for streaming applications">
+      
+      
+      
+        <link rel="canonical" href="https://rtajan.pages.bordeaux-inp.fr/pystreampu/reference/operators/">
+      
+      
+        <link rel="prev" href="../sockets/">
+      
+      
+        <link rel="next" href="../modules/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.8.0">
+    
+    
+      
+        <title>Operators - pyStreamPU</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.57a0d79d.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/_mkdocstrings.css">
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    <body dir="ltr">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#operators" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="pyStreamPU" class="md-header__button md-logo" aria-label="pyStreamPU" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            pyStreamPU
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Operators
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://gitlab.bordeaux-inp.fr/rtajan/pystreampu" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    rtajan/pystreampu
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="pyStreamPU" class="md-nav__button md-logo" aria-label="pyStreamPU" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    pyStreamPU
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://gitlab.bordeaux-inp.fr/rtajan/pystreampu" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    rtajan/pystreampu
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../install/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Installation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Tutorial
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Tutorial
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tutorial/first_steps/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    First steps
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tutorial/going_further/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Going further
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tutorial/sequence/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Building a Sequence
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tutorial/parallelism/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Running in parallel
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    How-to guides
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    How-to guides
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../guides/socket_operations/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Working with sockets
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../guides/python_module/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Writing a module in Python
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../guides/cpp_module/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Writing a module in C++
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../guides/profiling/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Measuring performance
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../guides/visualize/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Visualizing a graph
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../guides/plugins/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Creating a plugin
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../concepts/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Concepts
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" checked>
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    API reference
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_6" id="__nav_6_label" tabindex="">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    API reference
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../core/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Core classes
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../sockets/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Sockets
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Operators
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Operators
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+  
+
+<nav class="md-nav md-nav--secondary" aria-label="Contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#binary-operators" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Binary operators
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Binary operators">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#streampu._bop.add" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        add
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#streampu._bop.sub" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        sub
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#streampu._bop.mul" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        mul
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#streampu._bop.div" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        div
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#streampu._bop.equal" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        equal
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#streampu._bop.not_equal" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        not_equal
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#streampu._bop.less" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        less
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#streampu._bop.less_equal" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        less_equal
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#streampu._bop.greater" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        greater
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#streampu._bop.greater_equal" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        greater_equal
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#streampu._bop.bitwise_and" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        bitwise_and
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#streampu._bop.bitwise_or" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        bitwise_or
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#streampu._bop.bitwise_xor" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        bitwise_xor
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#streampu._bop.bop" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        bop
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#streampu._bop.BType" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        BType
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#unary-operators" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Unary operators
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Unary operators">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#streampu._uop.neg" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        neg
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#streampu._uop.abs" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        abs
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#streampu._uop.bitwise_not" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        bitwise_not
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#streampu._uop.cast" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        cast
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#streampu._uop.uop" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        uop
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#streampu._uop.UType" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        UType
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#reductions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Reductions
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Reductions">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#streampu._red.sum" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        sum
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#streampu._red.prod" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        prod
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#streampu._red.all" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        all
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#streampu._red.any" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        any
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#streampu._red.red" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        red
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#streampu._red.RType" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        RType
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#minimum-and-maximum" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Minimum and maximum
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Minimum and maximum">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#streampu._minmax.min" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        min
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#streampu._minmax.max" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        max
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../modules/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Modules
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../execution/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Execution
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../tools/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Tools
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../dev_guidelines/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Development
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+  
+
+<nav class="md-nav md-nav--secondary" aria-label="Contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#binary-operators" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Binary operators
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Binary operators">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#streampu._bop.add" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        add
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#streampu._bop.sub" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        sub
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#streampu._bop.mul" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        mul
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#streampu._bop.div" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        div
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#streampu._bop.equal" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        equal
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#streampu._bop.not_equal" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        not_equal
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#streampu._bop.less" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        less
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#streampu._bop.less_equal" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        less_equal
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#streampu._bop.greater" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        greater
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#streampu._bop.greater_equal" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        greater_equal
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#streampu._bop.bitwise_and" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        bitwise_and
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#streampu._bop.bitwise_or" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        bitwise_or
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#streampu._bop.bitwise_xor" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        bitwise_xor
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#streampu._bop.bop" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        bop
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#streampu._bop.BType" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        BType
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#unary-operators" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Unary operators
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Unary operators">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#streampu._uop.neg" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        neg
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#streampu._uop.abs" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        abs
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#streampu._uop.bitwise_not" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        bitwise_not
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#streampu._uop.cast" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        cast
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#streampu._uop.uop" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        uop
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#streampu._uop.UType" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        UType
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#reductions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Reductions
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Reductions">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#streampu._red.sum" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        sum
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#streampu._red.prod" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        prod
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#streampu._red.all" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        all
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#streampu._red.any" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        any
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#streampu._red.red" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        red
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#streampu._red.RType" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        RType
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#minimum-and-maximum" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Minimum and maximum
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Minimum and maximum">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#streampu._minmax.min" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        min
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#streampu._minmax.max" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        max
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+    <a href="https://gitlab.bordeaux-inp.fr/rtajan/pystreampu/-/edit/develop/docs/reference/operators.md" title="Edit this page" class="md-content__button md-icon" rel="edit">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 20H6V4h7v5h5v3.1l2-2V8l-6-6H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h4zm10.2-7c.1 0 .3.1.4.2l1.3 1.3c.2.2.2.6 0 .8l-1 1-2.1-2.1 1-1c.1-.1.2-.2.4-.2m0 3.9L14.1 23H12v-2.1l6.1-6.1z"/></svg>
+    </a>
+  
+  
+    
+      
+    
+    <a href="https://gitlab.bordeaux-inp.fr/rtajan/pystreampu/-/raw/develop/docs/reference/operators.md" title="View source of this page" class="md-content__button md-icon">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M17 18c.56 0 1 .44 1 1s-.44 1-1 1-1-.44-1-1 .44-1 1-1m0-3c-2.73 0-5.06 1.66-6 4 .94 2.34 3.27 4 6 4s5.06-1.66 6-4c-.94-2.34-3.27-4-6-4m0 6.5a2.5 2.5 0 0 1-2.5-2.5 2.5 2.5 0 0 1 2.5-2.5 2.5 2.5 0 0 1 2.5 2.5 2.5 2.5 0 0 1-2.5 2.5M9.27 20H6V4h7v5h5v4.07c.7.08 1.36.25 2 .49V8l-6-6H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h4.5a8.2 8.2 0 0 1-1.23-2"/></svg>
+    </a>
+  
+
+
+<h1 id="operators">Operators<a class="headerlink" href="#operators" title="Permanent link">&para;</a></h1>
+<p>The Python operators on sockets (<code>+</code>, <code>&lt;</code>, <code>&amp;</code>, <code>-x</code>…) call the functions of this page.</p>
+<h2 id="binary-operators">Binary operators<a class="headerlink" href="#binary-operators" title="Permanent link">&para;</a></h2>
+
+
+<div class="doc doc-object doc-function">
+
+
+<h3 id="streampu._bop.add" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-function"></code>            <span class="doc doc-object-name doc-function-name">add</span>
+
+
+<a href="#streampu._bop.add" class="headerlink" title="Permanent link">&para;</a></h3>
+<div class="doc-signature highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="nf">add</span><span class="p">(</span><span class="n">s_0</span><span class="p">:</span> <span class="n">SocketLike</span><span class="p">,</span> <span class="n">s_1</span><span class="p">:</span> <span class="n">SocketLike</span><span class="p">,</span> <span class="n">output_dtype</span><span class="p">:</span> <span class="n">dtype</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Socket</span>
+</span></code></pre></div>
+
+    <div class="doc doc-contents first">
+
+        <p>Add two sockets componentwise.</p>
+
+
+<p><span class="doc-section-title">Parameters:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Type</th>
+          <th>Description</th>
+          <th>Default</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td>
+                <code>s_0</code>
+            </td>
+            <td>
+                  <code><span title="streampu._typing.SocketLike">SocketLike</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>sockets to process</p>
+              </div>
+            </td>
+            <td>
+                <em>required</em>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>s_1</code>
+            </td>
+            <td>
+                  <code><span title="streampu._typing.SocketLike">SocketLike</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>sockets to process</p>
+              </div>
+            </td>
+            <td>
+                <em>required</em>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>output_dtype</code>
+            </td>
+            <td>
+                  <code><a class="autorefs autorefs-internal" title="            dtype (streampu._ext.dtype)" href="../core/#streampu._ext.dtype">dtype</a></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>dtype of the output socket</p>
+              </div>
+            </td>
+            <td>
+                  <code>None</code>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+    <p><span class="doc-section-title">Returns:</span></p>
+    <table>
+      <thead>
+        <tr>
+<th>Name</th>          <th>Type</th>
+          <th>Description</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+<td><code>out</code></td>            <td>
+                  <code><a class="autorefs autorefs-internal" title="            Socket (streampu._ext.core.Socket)" href="../core/#streampu._ext.core.Socket">Socket</a></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>out[i] = s_0[i] + s_1[i]</p>
+              </div>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h3 id="streampu._bop.sub" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-function"></code>            <span class="doc doc-object-name doc-function-name">sub</span>
+
+
+<a href="#streampu._bop.sub" class="headerlink" title="Permanent link">&para;</a></h3>
+<div class="doc-signature highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="nf">sub</span><span class="p">(</span><span class="n">s_0</span><span class="p">:</span> <span class="n">SocketLike</span><span class="p">,</span> <span class="n">s_1</span><span class="p">:</span> <span class="n">SocketLike</span><span class="p">,</span> <span class="n">output_dtype</span><span class="p">:</span> <span class="n">dtype</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Socket</span>
+</span></code></pre></div>
+
+    <div class="doc doc-contents first">
+
+        <p>Substract two sockets componentwise.</p>
+
+
+<p><span class="doc-section-title">Parameters:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Type</th>
+          <th>Description</th>
+          <th>Default</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td>
+                <code>s_0</code>
+            </td>
+            <td>
+                  <code><span title="streampu._typing.SocketLike">SocketLike</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>sockets to process</p>
+              </div>
+            </td>
+            <td>
+                <em>required</em>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>s_1</code>
+            </td>
+            <td>
+                  <code><span title="streampu._typing.SocketLike">SocketLike</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>sockets to process</p>
+              </div>
+            </td>
+            <td>
+                <em>required</em>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>output_dtype</code>
+            </td>
+            <td>
+                  <code><a class="autorefs autorefs-internal" title="            dtype (streampu._ext.dtype)" href="../core/#streampu._ext.dtype">dtype</a></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>dtype of the output socket</p>
+              </div>
+            </td>
+            <td>
+                  <code>None</code>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+    <p><span class="doc-section-title">Returns:</span></p>
+    <table>
+      <thead>
+        <tr>
+<th>Name</th>          <th>Type</th>
+          <th>Description</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+<td><code>out</code></td>            <td>
+                  <code><a class="autorefs autorefs-internal" title="            Socket (streampu._ext.core.Socket)" href="../core/#streampu._ext.core.Socket">Socket</a></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>z[i] = s_0[i] - s_1[i]</p>
+              </div>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h3 id="streampu._bop.mul" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-function"></code>            <span class="doc doc-object-name doc-function-name">mul</span>
+
+
+<a href="#streampu._bop.mul" class="headerlink" title="Permanent link">&para;</a></h3>
+<div class="doc-signature highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="nf">mul</span><span class="p">(</span><span class="n">s_0</span><span class="p">:</span> <span class="n">SocketLike</span><span class="p">,</span> <span class="n">s_1</span><span class="p">:</span> <span class="n">SocketLike</span><span class="p">,</span> <span class="n">output_dtype</span><span class="p">:</span> <span class="n">dtype</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Socket</span>
+</span></code></pre></div>
+
+    <div class="doc doc-contents first">
+
+        <p>Multiply two sockets componentwise.</p>
+
+
+<p><span class="doc-section-title">Parameters:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Type</th>
+          <th>Description</th>
+          <th>Default</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td>
+                <code>s_0</code>
+            </td>
+            <td>
+                  <code><span title="streampu._typing.SocketLike">SocketLike</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>sockets to process</p>
+              </div>
+            </td>
+            <td>
+                <em>required</em>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>s_1</code>
+            </td>
+            <td>
+                  <code><span title="streampu._typing.SocketLike">SocketLike</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>sockets to process</p>
+              </div>
+            </td>
+            <td>
+                <em>required</em>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>output_dtype</code>
+            </td>
+            <td>
+                  <code><a class="autorefs autorefs-internal" title="            dtype (streampu._ext.dtype)" href="../core/#streampu._ext.dtype">dtype</a></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>dtype of the output socket</p>
+              </div>
+            </td>
+            <td>
+                  <code>None</code>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+    <p><span class="doc-section-title">Returns:</span></p>
+    <table>
+      <thead>
+        <tr>
+<th>Name</th>          <th>Type</th>
+          <th>Description</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+<td><code>out</code></td>            <td>
+                  <code><a class="autorefs autorefs-internal" title="            Socket (streampu._ext.core.Socket)" href="../core/#streampu._ext.core.Socket">Socket</a></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>z[i] = s_0[i] * s_1[i]</p>
+              </div>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h3 id="streampu._bop.div" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-function"></code>            <span class="doc doc-object-name doc-function-name">div</span>
+
+
+<a href="#streampu._bop.div" class="headerlink" title="Permanent link">&para;</a></h3>
+<div class="doc-signature highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="nf">div</span><span class="p">(</span><span class="n">s_0</span><span class="p">:</span> <span class="n">SocketLike</span><span class="p">,</span> <span class="n">s_1</span><span class="p">:</span> <span class="n">SocketLike</span><span class="p">,</span> <span class="n">output_dtype</span><span class="p">:</span> <span class="n">dtype</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Socket</span>
+</span></code></pre></div>
+
+    <div class="doc doc-contents first">
+
+        <p>Divide two sockets componentwise.</p>
+
+
+<p><span class="doc-section-title">Parameters:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Type</th>
+          <th>Description</th>
+          <th>Default</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td>
+                <code>s_0</code>
+            </td>
+            <td>
+                  <code><span title="streampu._typing.SocketLike">SocketLike</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>sockets to process</p>
+              </div>
+            </td>
+            <td>
+                <em>required</em>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>s_1</code>
+            </td>
+            <td>
+                  <code><span title="streampu._typing.SocketLike">SocketLike</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>sockets to process</p>
+              </div>
+            </td>
+            <td>
+                <em>required</em>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>output_dtype</code>
+            </td>
+            <td>
+                  <code><a class="autorefs autorefs-internal" title="            dtype (streampu._ext.dtype)" href="../core/#streampu._ext.dtype">dtype</a></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>dtype of the output socket</p>
+              </div>
+            </td>
+            <td>
+                  <code>None</code>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+    <p><span class="doc-section-title">Returns:</span></p>
+    <table>
+      <thead>
+        <tr>
+<th>Name</th>          <th>Type</th>
+          <th>Description</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+<td><code>out</code></td>            <td>
+                  <code><a class="autorefs autorefs-internal" title="            Socket (streampu._ext.core.Socket)" href="../core/#streampu._ext.core.Socket">Socket</a></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>z[i] = s_0[i] / s_1[i]</p>
+              </div>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h3 id="streampu._bop.equal" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-function"></code>            <span class="doc doc-object-name doc-function-name">equal</span>
+
+
+<a href="#streampu._bop.equal" class="headerlink" title="Permanent link">&para;</a></h3>
+<div class="doc-signature highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="nf">equal</span><span class="p">(</span><span class="n">s_0</span><span class="p">:</span> <span class="n">SocketLike</span><span class="p">,</span> <span class="n">s_1</span><span class="p">:</span> <span class="n">SocketLike</span><span class="p">,</span> <span class="n">output_dtype</span><span class="p">:</span> <span class="n">dtype</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Socket</span>
+</span></code></pre></div>
+
+    <div class="doc doc-contents first">
+
+        <p>Compare two sockets componentwise (==).</p>
+
+
+<p><span class="doc-section-title">Parameters:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Type</th>
+          <th>Description</th>
+          <th>Default</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td>
+                <code>s_0</code>
+            </td>
+            <td>
+                  <code><span title="streampu._typing.SocketLike">SocketLike</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>sockets to process</p>
+              </div>
+            </td>
+            <td>
+                <em>required</em>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>s_1</code>
+            </td>
+            <td>
+                  <code><span title="streampu._typing.SocketLike">SocketLike</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>sockets to process</p>
+              </div>
+            </td>
+            <td>
+                <em>required</em>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>output_dtype</code>
+            </td>
+            <td>
+                  <code><a class="autorefs autorefs-internal" title="            dtype (streampu._ext.dtype)" href="../core/#streampu._ext.dtype">dtype</a></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>dtype of the output socket</p>
+              </div>
+            </td>
+            <td>
+                  <code>None</code>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+    <p><span class="doc-section-title">Returns:</span></p>
+    <table>
+      <thead>
+        <tr>
+<th>Name</th>          <th>Type</th>
+          <th>Description</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+<td><code>out</code></td>            <td>
+                  <code><a class="autorefs autorefs-internal" title="            Socket (streampu._ext.core.Socket)" href="../core/#streampu._ext.core.Socket">Socket</a></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>z[i] = (s_0[i] == s_1[i])</p>
+              </div>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h3 id="streampu._bop.not_equal" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-function"></code>            <span class="doc doc-object-name doc-function-name">not_equal</span>
+
+
+<a href="#streampu._bop.not_equal" class="headerlink" title="Permanent link">&para;</a></h3>
+<div class="doc-signature highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="nf">not_equal</span><span class="p">(</span><span class="n">s_0</span><span class="p">:</span> <span class="n">SocketLike</span><span class="p">,</span> <span class="n">s_1</span><span class="p">:</span> <span class="n">SocketLike</span><span class="p">,</span> <span class="n">output_dtype</span><span class="p">:</span> <span class="n">dtype</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Socket</span>
+</span></code></pre></div>
+
+    <div class="doc doc-contents first">
+
+        <p>Compare two sockets componentwise (!=).</p>
+
+
+<p><span class="doc-section-title">Parameters:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Type</th>
+          <th>Description</th>
+          <th>Default</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td>
+                <code>s_0</code>
+            </td>
+            <td>
+                  <code><span title="streampu._typing.SocketLike">SocketLike</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>sockets to process</p>
+              </div>
+            </td>
+            <td>
+                <em>required</em>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>s_1</code>
+            </td>
+            <td>
+                  <code><span title="streampu._typing.SocketLike">SocketLike</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>sockets to process</p>
+              </div>
+            </td>
+            <td>
+                <em>required</em>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>output_dtype</code>
+            </td>
+            <td>
+                  <code><a class="autorefs autorefs-internal" title="            dtype (streampu._ext.dtype)" href="../core/#streampu._ext.dtype">dtype</a></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>dtype of the output socket</p>
+              </div>
+            </td>
+            <td>
+                  <code>None</code>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+    <p><span class="doc-section-title">Returns:</span></p>
+    <table>
+      <thead>
+        <tr>
+<th>Name</th>          <th>Type</th>
+          <th>Description</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+<td><code>out</code></td>            <td>
+                  <code><a class="autorefs autorefs-internal" title="            Socket (streampu._ext.core.Socket)" href="../core/#streampu._ext.core.Socket">Socket</a></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>z[i] = (s_0[i] != s_1[i])</p>
+              </div>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h3 id="streampu._bop.less" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-function"></code>            <span class="doc doc-object-name doc-function-name">less</span>
+
+
+<a href="#streampu._bop.less" class="headerlink" title="Permanent link">&para;</a></h3>
+<div class="doc-signature highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="nf">less</span><span class="p">(</span><span class="n">s_0</span><span class="p">:</span> <span class="n">SocketLike</span><span class="p">,</span> <span class="n">s_1</span><span class="p">:</span> <span class="n">SocketLike</span><span class="p">,</span> <span class="n">output_dtype</span><span class="p">:</span> <span class="n">dtype</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Socket</span>
+</span></code></pre></div>
+
+    <div class="doc doc-contents first">
+
+        <p>Compare two sockets componentwise (&lt;).</p>
+
+
+<p><span class="doc-section-title">Parameters:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Type</th>
+          <th>Description</th>
+          <th>Default</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td>
+                <code>s_0</code>
+            </td>
+            <td>
+                  <code><span title="streampu._typing.SocketLike">SocketLike</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>sockets to process</p>
+              </div>
+            </td>
+            <td>
+                <em>required</em>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>s_1</code>
+            </td>
+            <td>
+                  <code><span title="streampu._typing.SocketLike">SocketLike</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>sockets to process</p>
+              </div>
+            </td>
+            <td>
+                <em>required</em>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>output_dtype</code>
+            </td>
+            <td>
+                  <code><a class="autorefs autorefs-internal" title="            dtype (streampu._ext.dtype)" href="../core/#streampu._ext.dtype">dtype</a></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>dtype of the output socket</p>
+              </div>
+            </td>
+            <td>
+                  <code>None</code>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+    <p><span class="doc-section-title">Returns:</span></p>
+    <table>
+      <thead>
+        <tr>
+<th>Name</th>          <th>Type</th>
+          <th>Description</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+<td><code>out</code></td>            <td>
+                  <code><a class="autorefs autorefs-internal" title="            Socket (streampu._ext.core.Socket)" href="../core/#streampu._ext.core.Socket">Socket</a></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>z[i] = (s_0[i] &lt; s_1[i])</p>
+              </div>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h3 id="streampu._bop.less_equal" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-function"></code>            <span class="doc doc-object-name doc-function-name">less_equal</span>
+
+
+<a href="#streampu._bop.less_equal" class="headerlink" title="Permanent link">&para;</a></h3>
+<div class="doc-signature highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="nf">less_equal</span><span class="p">(</span><span class="n">s_0</span><span class="p">:</span> <span class="n">SocketLike</span><span class="p">,</span> <span class="n">s_1</span><span class="p">:</span> <span class="n">SocketLike</span><span class="p">,</span> <span class="n">output_dtype</span><span class="p">:</span> <span class="n">dtype</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Socket</span>
+</span></code></pre></div>
+
+    <div class="doc doc-contents first">
+
+        <p>Compare two sockets componentwise (&lt;=).</p>
+
+
+<p><span class="doc-section-title">Parameters:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Type</th>
+          <th>Description</th>
+          <th>Default</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td>
+                <code>s_0</code>
+            </td>
+            <td>
+                  <code><span title="streampu._typing.SocketLike">SocketLike</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>sockets to process</p>
+              </div>
+            </td>
+            <td>
+                <em>required</em>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>s_1</code>
+            </td>
+            <td>
+                  <code><span title="streampu._typing.SocketLike">SocketLike</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>sockets to process</p>
+              </div>
+            </td>
+            <td>
+                <em>required</em>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>output_dtype</code>
+            </td>
+            <td>
+                  <code><a class="autorefs autorefs-internal" title="            dtype (streampu._ext.dtype)" href="../core/#streampu._ext.dtype">dtype</a></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>dtype of the output socket</p>
+              </div>
+            </td>
+            <td>
+                  <code>None</code>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+    <p><span class="doc-section-title">Returns:</span></p>
+    <table>
+      <thead>
+        <tr>
+<th>Name</th>          <th>Type</th>
+          <th>Description</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+<td><code>out</code></td>            <td>
+                  <code><a class="autorefs autorefs-internal" title="            Socket (streampu._ext.core.Socket)" href="../core/#streampu._ext.core.Socket">Socket</a></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>z[i] = (s_0[i] &lt;= s_1[i])</p>
+              </div>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h3 id="streampu._bop.greater" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-function"></code>            <span class="doc doc-object-name doc-function-name">greater</span>
+
+
+<a href="#streampu._bop.greater" class="headerlink" title="Permanent link">&para;</a></h3>
+<div class="doc-signature highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="nf">greater</span><span class="p">(</span><span class="n">s_0</span><span class="p">:</span> <span class="n">SocketLike</span><span class="p">,</span> <span class="n">s_1</span><span class="p">:</span> <span class="n">SocketLike</span><span class="p">,</span> <span class="n">output_dtype</span><span class="p">:</span> <span class="n">dtype</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Socket</span>
+</span></code></pre></div>
+
+    <div class="doc doc-contents first">
+
+        <p>Compare two sockets componentwise (&gt;).</p>
+
+
+<p><span class="doc-section-title">Parameters:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Type</th>
+          <th>Description</th>
+          <th>Default</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td>
+                <code>s_0</code>
+            </td>
+            <td>
+                  <code><span title="streampu._typing.SocketLike">SocketLike</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>sockets to process</p>
+              </div>
+            </td>
+            <td>
+                <em>required</em>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>s_1</code>
+            </td>
+            <td>
+                  <code><span title="streampu._typing.SocketLike">SocketLike</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>sockets to process</p>
+              </div>
+            </td>
+            <td>
+                <em>required</em>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>output_dtype</code>
+            </td>
+            <td>
+                  <code><a class="autorefs autorefs-internal" title="            dtype (streampu._ext.dtype)" href="../core/#streampu._ext.dtype">dtype</a></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>dtype of the output socket</p>
+              </div>
+            </td>
+            <td>
+                  <code>None</code>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+    <p><span class="doc-section-title">Returns:</span></p>
+    <table>
+      <thead>
+        <tr>
+<th>Name</th>          <th>Type</th>
+          <th>Description</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+<td><code>out</code></td>            <td>
+                  <code><a class="autorefs autorefs-internal" title="            Socket (streampu._ext.core.Socket)" href="../core/#streampu._ext.core.Socket">Socket</a></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>z[i] = (s_0[i] &gt; s_1[i])</p>
+              </div>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h3 id="streampu._bop.greater_equal" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-function"></code>            <span class="doc doc-object-name doc-function-name">greater_equal</span>
+
+
+<a href="#streampu._bop.greater_equal" class="headerlink" title="Permanent link">&para;</a></h3>
+<div class="doc-signature highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="nf">greater_equal</span><span class="p">(</span><span class="n">s_0</span><span class="p">:</span> <span class="n">SocketLike</span><span class="p">,</span> <span class="n">s_1</span><span class="p">:</span> <span class="n">SocketLike</span><span class="p">,</span> <span class="n">output_dtype</span><span class="p">:</span> <span class="n">dtype</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Socket</span>
+</span></code></pre></div>
+
+    <div class="doc doc-contents first">
+
+        <p>Compare two sockets componentwise (&gt;=).</p>
+
+
+<p><span class="doc-section-title">Parameters:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Type</th>
+          <th>Description</th>
+          <th>Default</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td>
+                <code>s_0</code>
+            </td>
+            <td>
+                  <code><span title="streampu._typing.SocketLike">SocketLike</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>sockets to process</p>
+              </div>
+            </td>
+            <td>
+                <em>required</em>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>s_1</code>
+            </td>
+            <td>
+                  <code><span title="streampu._typing.SocketLike">SocketLike</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>sockets to process</p>
+              </div>
+            </td>
+            <td>
+                <em>required</em>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>output_dtype</code>
+            </td>
+            <td>
+                  <code><a class="autorefs autorefs-internal" title="            dtype (streampu._ext.dtype)" href="../core/#streampu._ext.dtype">dtype</a></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>dtype of the output socket</p>
+              </div>
+            </td>
+            <td>
+                  <code>None</code>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+    <p><span class="doc-section-title">Returns:</span></p>
+    <table>
+      <thead>
+        <tr>
+<th>Name</th>          <th>Type</th>
+          <th>Description</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+<td><code>out</code></td>            <td>
+                  <code><a class="autorefs autorefs-internal" title="            Socket (streampu._ext.core.Socket)" href="../core/#streampu._ext.core.Socket">Socket</a></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>z[i] = (s_0[i] &gt;= s_1[i])</p>
+              </div>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h3 id="streampu._bop.bitwise_and" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-function"></code>            <span class="doc doc-object-name doc-function-name">bitwise_and</span>
+
+
+<a href="#streampu._bop.bitwise_and" class="headerlink" title="Permanent link">&para;</a></h3>
+<div class="doc-signature highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="nf">bitwise_and</span><span class="p">(</span><span class="n">s_0</span><span class="p">:</span> <span class="n">SocketLike</span><span class="p">,</span> <span class="n">s_1</span><span class="p">:</span> <span class="n">SocketLike</span><span class="p">,</span> <span class="n">output_dtype</span><span class="p">:</span> <span class="n">dtype</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Socket</span>
+</span></code></pre></div>
+
+    <div class="doc doc-contents first">
+
+        <p>Compute bitwise AND between two sockets componentwise.</p>
+
+
+<p><span class="doc-section-title">Parameters:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Type</th>
+          <th>Description</th>
+          <th>Default</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td>
+                <code>s_0</code>
+            </td>
+            <td>
+                  <code><span title="streampu._typing.SocketLike">SocketLike</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>sockets to process</p>
+              </div>
+            </td>
+            <td>
+                <em>required</em>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>s_1</code>
+            </td>
+            <td>
+                  <code><span title="streampu._typing.SocketLike">SocketLike</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>sockets to process</p>
+              </div>
+            </td>
+            <td>
+                <em>required</em>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>output_dtype</code>
+            </td>
+            <td>
+                  <code><a class="autorefs autorefs-internal" title="            dtype (streampu._ext.dtype)" href="../core/#streampu._ext.dtype">dtype</a></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>dtype of the output socket</p>
+              </div>
+            </td>
+            <td>
+                  <code>None</code>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+    <p><span class="doc-section-title">Returns:</span></p>
+    <table>
+      <thead>
+        <tr>
+<th>Name</th>          <th>Type</th>
+          <th>Description</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+<td><code>out</code></td>            <td>
+                  <code><a class="autorefs autorefs-internal" title="            Socket (streampu._ext.core.Socket)" href="../core/#streampu._ext.core.Socket">Socket</a></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>z[i] = (s_0[i] &amp; s_1[i])</p>
+              </div>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h3 id="streampu._bop.bitwise_or" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-function"></code>            <span class="doc doc-object-name doc-function-name">bitwise_or</span>
+
+
+<a href="#streampu._bop.bitwise_or" class="headerlink" title="Permanent link">&para;</a></h3>
+<div class="doc-signature highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="nf">bitwise_or</span><span class="p">(</span><span class="n">s_0</span><span class="p">:</span> <span class="n">SocketLike</span><span class="p">,</span> <span class="n">s_1</span><span class="p">:</span> <span class="n">SocketLike</span><span class="p">,</span> <span class="n">output_dtype</span><span class="p">:</span> <span class="n">dtype</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Socket</span>
+</span></code></pre></div>
+
+    <div class="doc doc-contents first">
+
+        <p>Compute bitwise OR between two sockets componentwise.</p>
+
+
+<p><span class="doc-section-title">Parameters:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Type</th>
+          <th>Description</th>
+          <th>Default</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td>
+                <code>s_0</code>
+            </td>
+            <td>
+                  <code><span title="streampu._typing.SocketLike">SocketLike</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>sockets to process</p>
+              </div>
+            </td>
+            <td>
+                <em>required</em>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>s_1</code>
+            </td>
+            <td>
+                  <code><span title="streampu._typing.SocketLike">SocketLike</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>sockets to process</p>
+              </div>
+            </td>
+            <td>
+                <em>required</em>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>output_dtype</code>
+            </td>
+            <td>
+                  <code><a class="autorefs autorefs-internal" title="            dtype (streampu._ext.dtype)" href="../core/#streampu._ext.dtype">dtype</a></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>dtype of the output socket</p>
+              </div>
+            </td>
+            <td>
+                  <code>None</code>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+    <p><span class="doc-section-title">Returns:</span></p>
+    <table>
+      <thead>
+        <tr>
+<th>Name</th>          <th>Type</th>
+          <th>Description</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+<td><code>out</code></td>            <td>
+                  <code><a class="autorefs autorefs-internal" title="            Socket (streampu._ext.core.Socket)" href="../core/#streampu._ext.core.Socket">Socket</a></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>z[i] = (s_0[i] | s_1[i])</p>
+              </div>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h3 id="streampu._bop.bitwise_xor" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-function"></code>            <span class="doc doc-object-name doc-function-name">bitwise_xor</span>
+
+
+<a href="#streampu._bop.bitwise_xor" class="headerlink" title="Permanent link">&para;</a></h3>
+<div class="doc-signature highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="nf">bitwise_xor</span><span class="p">(</span><span class="n">s_0</span><span class="p">:</span> <span class="n">SocketLike</span><span class="p">,</span> <span class="n">s_1</span><span class="p">:</span> <span class="n">SocketLike</span><span class="p">,</span> <span class="n">output_dtype</span><span class="p">:</span> <span class="n">dtype</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Socket</span>
+</span></code></pre></div>
+
+    <div class="doc doc-contents first">
+
+        <p>Compute bitwise XOR between two sockets componentwise.</p>
+
+
+<p><span class="doc-section-title">Parameters:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Type</th>
+          <th>Description</th>
+          <th>Default</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td>
+                <code>s_0</code>
+            </td>
+            <td>
+                  <code><span title="streampu._typing.SocketLike">SocketLike</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>sockets to process</p>
+              </div>
+            </td>
+            <td>
+                <em>required</em>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>s_1</code>
+            </td>
+            <td>
+                  <code><span title="streampu._typing.SocketLike">SocketLike</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>sockets to process</p>
+              </div>
+            </td>
+            <td>
+                <em>required</em>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>output_dtype</code>
+            </td>
+            <td>
+                  <code><a class="autorefs autorefs-internal" title="            dtype (streampu._ext.dtype)" href="../core/#streampu._ext.dtype">dtype</a></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>dtype of the output socket</p>
+              </div>
+            </td>
+            <td>
+                  <code>None</code>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+    <p><span class="doc-section-title">Returns:</span></p>
+    <table>
+      <thead>
+        <tr>
+<th>Name</th>          <th>Type</th>
+          <th>Description</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+<td><code>out</code></td>            <td>
+                  <code><a class="autorefs autorefs-internal" title="            Socket (streampu._ext.core.Socket)" href="../core/#streampu._ext.core.Socket">Socket</a></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>out[i] = (s_0[i] ^ s_1[i])</p>
+              </div>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h3 id="streampu._bop.bop" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-function"></code>            <span class="doc doc-object-name doc-function-name">bop</span>
+
+
+<a href="#streampu._bop.bop" class="headerlink" title="Permanent link">&para;</a></h3>
+<div class="doc-signature highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="nf">bop</span><span class="p">(</span><span class="n">bop_type</span><span class="p">:</span> <span class="n">BType</span><span class="p">,</span> <span class="n">s_0</span><span class="p">:</span> <span class="n">Socket</span><span class="p">,</span> <span class="n">s_1</span><span class="p">:</span> <span class="n">SocketLike</span><span class="p">,</span> <span class="n">fwd</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span> <span class="n">rev</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span> <span class="n">output_dtype</span><span class="p">:</span> <span class="n">dtype</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Socket</span>
+</span></code></pre></div>
+
+    <div class="doc doc-contents first">
+
+        <p>Binary operator factory from Sockets.</p>
+
+
+<p><span class="doc-section-title">Parameters:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Type</th>
+          <th>Description</th>
+          <th>Default</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td>
+                <code>bop_type</code>
+            </td>
+            <td>
+                  <code><a class="autorefs autorefs-internal" title="            BType (streampu._bop.BType)" href="#streampu._bop.BType">BType</a></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Type of binary operator</p>
+              </div>
+            </td>
+            <td>
+                <em>required</em>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>s_0</code>
+            </td>
+            <td>
+                  <code><a class="autorefs autorefs-internal" title="            Socket (streampu._ext.core.Socket)" href="../core/#streampu._ext.core.Socket">Socket</a></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>First input of the binary operator (must be a Socket).</p>
+              </div>
+            </td>
+            <td>
+                <em>required</em>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>s_1</code>
+            </td>
+            <td>
+                  <code><span title="streampu._typing.SocketLike">SocketLike</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Second input of the binary operator.</p>
+              </div>
+            </td>
+            <td>
+                <em>required</em>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>fwd</code>
+            </td>
+            <td>
+                  <code><span title="bool">bool</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>If true, performs operations in place.</p>
+              </div>
+            </td>
+            <td>
+                  <code>False</code>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>rev</code>
+            </td>
+            <td>
+                  <code><span title="bool">bool</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>If true, exchange s_0 and s_1 (for right-bops).</p>
+              </div>
+            </td>
+            <td>
+                  <code>False</code>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>output_dtype</code>
+            </td>
+            <td>
+                  <code><a class="autorefs autorefs-internal" title="            dtype (streampu._ext.dtype)" href="../core/#streampu._ext.dtype">dtype</a></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>output data type</p>
+              </div>
+            </td>
+            <td>
+                  <code>None</code>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+    <p><span class="doc-section-title">Returns:</span></p>
+    <table>
+      <thead>
+        <tr>
+<th>Name</th>          <th>Type</th>
+          <th>Description</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+<td><code>out</code></td>            <td>
+                  <code><a class="autorefs autorefs-internal" title="            Socket (streampu._ext.core.Socket)" href="../core/#streampu._ext.core.Socket">Socket</a></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Binary operation elementwise result.</p>
+              </div>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-class">
+
+
+
+<h3 id="streampu._bop.BType" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-class"></code>            <span class="doc doc-object-name doc-class-name">BType</span>
+
+
+<a href="#streampu._bop.BType" class="headerlink" title="Permanent link">&para;</a></h3>
+
+
+    <div class="doc doc-contents first">
+            <p class="doc doc-class-bases">
+              Bases: <code><span title="enum.Enum">Enum</span></code></p>
+
+
+
+        <p>Binary operator enum.</p>
+
+
+
+
+
+
+
+
+
+
+
+<div class="doc doc-children">
+
+
+
+
+
+
+
+<div class="doc doc-object doc-attribute">
+
+
+
+<h4 id="streampu._bop.BType.ADD" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-attribute"></code>            <span class="doc doc-object-name doc-attribute-name">ADD</span>
+
+
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-class-attribute"><code>class-attribute</code></small>
+      <small class="doc doc-label doc-label-instance-attribute"><code>instance-attribute</code></small>
+  </span>
+
+<a href="#streampu._bop.BType.ADD" class="headerlink" title="Permanent link">&para;</a></h4>
+<div class="doc-signature highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="n">ADD</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+</span></code></pre></div>
+
+    <div class="doc doc-contents ">
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-attribute">
+
+
+
+<h4 id="streampu._bop.BType.SUB" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-attribute"></code>            <span class="doc doc-object-name doc-attribute-name">SUB</span>
+
+
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-class-attribute"><code>class-attribute</code></small>
+      <small class="doc doc-label doc-label-instance-attribute"><code>instance-attribute</code></small>
+  </span>
+
+<a href="#streampu._bop.BType.SUB" class="headerlink" title="Permanent link">&para;</a></h4>
+<div class="doc-signature highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="n">SUB</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+</span></code></pre></div>
+
+    <div class="doc doc-contents ">
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-attribute">
+
+
+
+<h4 id="streampu._bop.BType.MUL" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-attribute"></code>            <span class="doc doc-object-name doc-attribute-name">MUL</span>
+
+
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-class-attribute"><code>class-attribute</code></small>
+      <small class="doc doc-label doc-label-instance-attribute"><code>instance-attribute</code></small>
+  </span>
+
+<a href="#streampu._bop.BType.MUL" class="headerlink" title="Permanent link">&para;</a></h4>
+<div class="doc-signature highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="n">MUL</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+</span></code></pre></div>
+
+    <div class="doc doc-contents ">
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-attribute">
+
+
+
+<h4 id="streampu._bop.BType.DIV" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-attribute"></code>            <span class="doc doc-object-name doc-attribute-name">DIV</span>
+
+
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-class-attribute"><code>class-attribute</code></small>
+      <small class="doc doc-label doc-label-instance-attribute"><code>instance-attribute</code></small>
+  </span>
+
+<a href="#streampu._bop.BType.DIV" class="headerlink" title="Permanent link">&para;</a></h4>
+<div class="doc-signature highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="n">DIV</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+</span></code></pre></div>
+
+    <div class="doc doc-contents ">
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-attribute">
+
+
+
+<h4 id="streampu._bop.BType.GE" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-attribute"></code>            <span class="doc doc-object-name doc-attribute-name">GE</span>
+
+
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-class-attribute"><code>class-attribute</code></small>
+      <small class="doc doc-label doc-label-instance-attribute"><code>instance-attribute</code></small>
+  </span>
+
+<a href="#streampu._bop.BType.GE" class="headerlink" title="Permanent link">&para;</a></h4>
+<div class="doc-signature highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="n">GE</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+</span></code></pre></div>
+
+    <div class="doc doc-contents ">
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-attribute">
+
+
+
+<h4 id="streampu._bop.BType.GT" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-attribute"></code>            <span class="doc doc-object-name doc-attribute-name">GT</span>
+
+
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-class-attribute"><code>class-attribute</code></small>
+      <small class="doc doc-label doc-label-instance-attribute"><code>instance-attribute</code></small>
+  </span>
+
+<a href="#streampu._bop.BType.GT" class="headerlink" title="Permanent link">&para;</a></h4>
+<div class="doc-signature highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="n">GT</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+</span></code></pre></div>
+
+    <div class="doc doc-contents ">
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-attribute">
+
+
+
+<h4 id="streampu._bop.BType.LE" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-attribute"></code>            <span class="doc doc-object-name doc-attribute-name">LE</span>
+
+
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-class-attribute"><code>class-attribute</code></small>
+      <small class="doc doc-label doc-label-instance-attribute"><code>instance-attribute</code></small>
+  </span>
+
+<a href="#streampu._bop.BType.LE" class="headerlink" title="Permanent link">&para;</a></h4>
+<div class="doc-signature highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="n">LE</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+</span></code></pre></div>
+
+    <div class="doc doc-contents ">
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-attribute">
+
+
+
+<h4 id="streampu._bop.BType.LT" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-attribute"></code>            <span class="doc doc-object-name doc-attribute-name">LT</span>
+
+
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-class-attribute"><code>class-attribute</code></small>
+      <small class="doc doc-label doc-label-instance-attribute"><code>instance-attribute</code></small>
+  </span>
+
+<a href="#streampu._bop.BType.LT" class="headerlink" title="Permanent link">&para;</a></h4>
+<div class="doc-signature highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="n">LT</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+</span></code></pre></div>
+
+    <div class="doc doc-contents ">
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-attribute">
+
+
+
+<h4 id="streampu._bop.BType.EQ" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-attribute"></code>            <span class="doc doc-object-name doc-attribute-name">EQ</span>
+
+
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-class-attribute"><code>class-attribute</code></small>
+      <small class="doc doc-label doc-label-instance-attribute"><code>instance-attribute</code></small>
+  </span>
+
+<a href="#streampu._bop.BType.EQ" class="headerlink" title="Permanent link">&para;</a></h4>
+<div class="doc-signature highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="n">EQ</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+</span></code></pre></div>
+
+    <div class="doc doc-contents ">
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-attribute">
+
+
+
+<h4 id="streampu._bop.BType.NE" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-attribute"></code>            <span class="doc doc-object-name doc-attribute-name">NE</span>
+
+
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-class-attribute"><code>class-attribute</code></small>
+      <small class="doc doc-label doc-label-instance-attribute"><code>instance-attribute</code></small>
+  </span>
+
+<a href="#streampu._bop.BType.NE" class="headerlink" title="Permanent link">&para;</a></h4>
+<div class="doc-signature highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="n">NE</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+</span></code></pre></div>
+
+    <div class="doc doc-contents ">
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-attribute">
+
+
+
+<h4 id="streampu._bop.BType.AND" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-attribute"></code>            <span class="doc doc-object-name doc-attribute-name">AND</span>
+
+
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-class-attribute"><code>class-attribute</code></small>
+      <small class="doc doc-label doc-label-instance-attribute"><code>instance-attribute</code></small>
+  </span>
+
+<a href="#streampu._bop.BType.AND" class="headerlink" title="Permanent link">&para;</a></h4>
+<div class="doc-signature highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="n">AND</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+</span></code></pre></div>
+
+    <div class="doc doc-contents ">
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-attribute">
+
+
+
+<h4 id="streampu._bop.BType.OR" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-attribute"></code>            <span class="doc doc-object-name doc-attribute-name">OR</span>
+
+
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-class-attribute"><code>class-attribute</code></small>
+      <small class="doc doc-label doc-label-instance-attribute"><code>instance-attribute</code></small>
+  </span>
+
+<a href="#streampu._bop.BType.OR" class="headerlink" title="Permanent link">&para;</a></h4>
+<div class="doc-signature highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="n">OR</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+</span></code></pre></div>
+
+    <div class="doc doc-contents ">
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-attribute">
+
+
+
+<h4 id="streampu._bop.BType.XOR" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-attribute"></code>            <span class="doc doc-object-name doc-attribute-name">XOR</span>
+
+
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-class-attribute"><code>class-attribute</code></small>
+      <small class="doc doc-label doc-label-instance-attribute"><code>instance-attribute</code></small>
+  </span>
+
+<a href="#streampu._bop.BType.XOR" class="headerlink" title="Permanent link">&para;</a></h4>
+<div class="doc-signature highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="n">XOR</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+</span></code></pre></div>
+
+    <div class="doc doc-contents ">
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-attribute">
+
+
+
+<h4 id="streampu._bop.BType.MIN" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-attribute"></code>            <span class="doc doc-object-name doc-attribute-name">MIN</span>
+
+
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-class-attribute"><code>class-attribute</code></small>
+      <small class="doc doc-label doc-label-instance-attribute"><code>instance-attribute</code></small>
+  </span>
+
+<a href="#streampu._bop.BType.MIN" class="headerlink" title="Permanent link">&para;</a></h4>
+<div class="doc-signature highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="n">MIN</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+</span></code></pre></div>
+
+    <div class="doc doc-contents ">
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-attribute">
+
+
+
+<h4 id="streampu._bop.BType.MAX" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-attribute"></code>            <span class="doc doc-object-name doc-attribute-name">MAX</span>
+
+
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-class-attribute"><code>class-attribute</code></small>
+      <small class="doc doc-label doc-label-instance-attribute"><code>instance-attribute</code></small>
+  </span>
+
+<a href="#streampu._bop.BType.MAX" class="headerlink" title="Permanent link">&para;</a></h4>
+<div class="doc-signature highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="n">MAX</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+</span></code></pre></div>
+
+    <div class="doc doc-contents ">
+
+    </div>
+
+</div>
+
+
+
+
+
+
+  </div>
+
+    </div>
+
+</div><h2 id="unary-operators">Unary operators<a class="headerlink" href="#unary-operators" title="Permanent link">&para;</a></h2>
+
+
+<div class="doc doc-object doc-function">
+
+
+<h3 id="streampu._uop.neg" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-function"></code>            <span class="doc doc-object-name doc-function-name">neg</span>
+
+
+<a href="#streampu._uop.neg" class="headerlink" title="Permanent link">&para;</a></h3>
+<div class="doc-signature highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="nf">neg</span><span class="p">(</span><span class="n">sckt</span><span class="p">:</span> <span class="n">Socket</span><span class="p">,</span> <span class="n">output_dtype</span><span class="p">:</span> <span class="n">dtype</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Socket</span>
+</span></code></pre></div>
+
+    <div class="doc doc-contents first">
+
+        <p>Compute the opposite of a Socket.</p>
+
+
+<p><span class="doc-section-title">Parameters:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Type</th>
+          <th>Description</th>
+          <th>Default</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td>
+                <code>sckt</code>
+            </td>
+            <td>
+                  <code><a class="autorefs autorefs-internal" title="            Socket (streampu._ext.core.Socket)" href="../core/#streampu._ext.core.Socket">Socket</a></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>input data.</p>
+              </div>
+            </td>
+            <td>
+                <em>required</em>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>output_dtype</code>
+            </td>
+            <td>
+                  <code><a class="autorefs autorefs-internal" title="            dtype (streampu._ext.dtype)" href="../core/#streampu._ext.dtype">dtype</a></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>input data type.</p>
+              </div>
+            </td>
+            <td>
+                  <code>None</code>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+    <p><span class="doc-section-title">Returns:</span></p>
+    <table>
+      <thead>
+        <tr>
+<th>Name</th>          <th>Type</th>
+          <th>Description</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+<td><code>Socket</code></td>            <td>
+                  <code><a class="autorefs autorefs-internal" title="            Socket (streampu._ext.core.Socket)" href="../core/#streampu._ext.core.Socket">Socket</a></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>-sckt</p>
+              </div>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h3 id="streampu._uop.abs" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-function"></code>            <span class="doc doc-object-name doc-function-name">abs</span>
+
+
+<a href="#streampu._uop.abs" class="headerlink" title="Permanent link">&para;</a></h3>
+<div class="doc-signature highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="nf">abs</span><span class="p">(</span><span class="n">sckt</span><span class="p">:</span> <span class="n">Socket</span><span class="p">,</span> <span class="n">output_dtype</span><span class="p">:</span> <span class="n">dtype</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Socket</span>
+</span></code></pre></div>
+
+    <div class="doc doc-contents first">
+
+        <p>Compute absolute value of a Socket.</p>
+
+
+<p><span class="doc-section-title">Parameters:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Type</th>
+          <th>Description</th>
+          <th>Default</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td>
+                <code>sckt</code>
+            </td>
+            <td>
+                  <code><a class="autorefs autorefs-internal" title="            Socket (streampu._ext.core.Socket)" href="../core/#streampu._ext.core.Socket">Socket</a></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>input data.</p>
+              </div>
+            </td>
+            <td>
+                <em>required</em>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>output_dtype</code>
+            </td>
+            <td>
+                  <code><a class="autorefs autorefs-internal" title="            dtype (streampu._ext.dtype)" href="../core/#streampu._ext.dtype">dtype</a></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>input data type.</p>
+              </div>
+            </td>
+            <td>
+                  <code>None</code>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+    <p><span class="doc-section-title">Returns:</span></p>
+    <table>
+      <thead>
+        <tr>
+<th>Name</th>          <th>Type</th>
+          <th>Description</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+<td><code>Socket</code></td>            <td>
+                  <code><a class="autorefs autorefs-internal" title="            Socket (streampu._ext.core.Socket)" href="../core/#streampu._ext.core.Socket">Socket</a></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>abs(s)</p>
+              </div>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h3 id="streampu._uop.bitwise_not" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-function"></code>            <span class="doc doc-object-name doc-function-name">bitwise_not</span>
+
+
+<a href="#streampu._uop.bitwise_not" class="headerlink" title="Permanent link">&para;</a></h3>
+<div class="doc-signature highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="nf">bitwise_not</span><span class="p">(</span><span class="n">sckt</span><span class="p">:</span> <span class="n">Socket</span><span class="p">,</span> <span class="n">output_dtype</span><span class="p">:</span> <span class="n">dtype</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Socket</span>
+</span></code></pre></div>
+
+    <div class="doc doc-contents first">
+
+        <p>Compute bitwise not of socket's elements.</p>
+
+
+<p><span class="doc-section-title">Parameters:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Type</th>
+          <th>Description</th>
+          <th>Default</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td>
+                <code>sckt</code>
+            </td>
+            <td>
+                  <code><a class="autorefs autorefs-internal" title="            Socket (streampu._ext.core.Socket)" href="../core/#streampu._ext.core.Socket">Socket</a></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>input data.</p>
+              </div>
+            </td>
+            <td>
+                <em>required</em>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>output_dtype</code>
+            </td>
+            <td>
+                  <code><a class="autorefs autorefs-internal" title="            dtype (streampu._ext.dtype)" href="../core/#streampu._ext.dtype">dtype</a></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>input data type.</p>
+              </div>
+            </td>
+            <td>
+                  <code>None</code>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+    <p><span class="doc-section-title">Returns:</span></p>
+    <table>
+      <thead>
+        <tr>
+<th>Name</th>          <th>Type</th>
+          <th>Description</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+<td><code>Socket</code></td>            <td>
+                  <code><a class="autorefs autorefs-internal" title="            Socket (streampu._ext.core.Socket)" href="../core/#streampu._ext.core.Socket">Socket</a></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>!sckt</p>
+              </div>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h3 id="streampu._uop.cast" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-function"></code>            <span class="doc doc-object-name doc-function-name">cast</span>
+
+
+<a href="#streampu._uop.cast" class="headerlink" title="Permanent link">&para;</a></h3>
+<div class="doc-signature highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="nf">cast</span><span class="p">(</span><span class="n">sckt</span><span class="p">:</span> <span class="n">Socket</span><span class="p">,</span> <span class="n">output_dtype</span><span class="p">:</span> <span class="n">dtype</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Socket</span>
+</span></code></pre></div>
+
+    <div class="doc doc-contents first">
+
+        <p>Cast sckt to dtype.</p>
+
+
+<p><span class="doc-section-title">Parameters:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Type</th>
+          <th>Description</th>
+          <th>Default</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td>
+                <code>sckt</code>
+            </td>
+            <td>
+                  <code><a class="autorefs autorefs-internal" title="            Socket (streampu._ext.core.Socket)" href="../core/#streampu._ext.core.Socket">Socket</a></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>input data.</p>
+              </div>
+            </td>
+            <td>
+                <em>required</em>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>output_dtype</code>
+            </td>
+            <td>
+                  <code><a class="autorefs autorefs-internal" title="            dtype (streampu._ext.dtype)" href="../core/#streampu._ext.dtype">dtype</a></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>input data type.</p>
+              </div>
+            </td>
+            <td>
+                  <code>None</code>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+    <p><span class="doc-section-title">Returns:</span></p>
+    <table>
+      <thead>
+        <tr>
+<th>Name</th>          <th>Type</th>
+          <th>Description</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+<td><code>Socket</code></td>            <td>
+                  <code><a class="autorefs autorefs-internal" title="            Socket (streampu._ext.core.Socket)" href="../core/#streampu._ext.core.Socket">Socket</a></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>dtype(sckt)</p>
+              </div>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h3 id="streampu._uop.uop" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-function"></code>            <span class="doc doc-object-name doc-function-name">uop</span>
+
+
+<a href="#streampu._uop.uop" class="headerlink" title="Permanent link">&para;</a></h3>
+<div class="doc-signature highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="nf">uop</span><span class="p">(</span><span class="n">uop_type</span><span class="p">:</span> <span class="n">UType</span><span class="p">,</span> <span class="n">sckt</span><span class="p">:</span> <span class="n">Socket</span><span class="p">,</span> <span class="n">output_dtype</span><span class="p">:</span> <span class="n">dtype</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Socket</span>
+</span></code></pre></div>
+
+    <div class="doc doc-contents first">
+
+        <p>Apply unary operator on socket data.</p>
+
+
+<p><span class="doc-section-title">Parameters:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Type</th>
+          <th>Description</th>
+          <th>Default</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td>
+                <code>uop_type</code>
+            </td>
+            <td>
+                  <code><a class="autorefs autorefs-internal" title="            UType (streampu._uop.UType)" href="#streampu._uop.UType">UType</a></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Type of unary operator</p>
+              </div>
+            </td>
+            <td>
+                <em>required</em>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>sckt</code>
+            </td>
+            <td>
+                  <code><a class="autorefs autorefs-internal" title="            Socket (streampu._ext.core.Socket)" href="../core/#streampu._ext.core.Socket">Socket</a></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>unary operator input</p>
+              </div>
+            </td>
+            <td>
+                <em>required</em>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>output_dtype</code>
+            </td>
+            <td>
+                  <code><a class="autorefs autorefs-internal" title="            dtype (streampu._ext.dtype)" href="../core/#streampu._ext.dtype">dtype</a></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>output data type</p>
+              </div>
+            </td>
+            <td>
+                  <code>None</code>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+    <p><span class="doc-section-title">Returns:</span></p>
+    <table>
+      <thead>
+        <tr>
+<th>Name</th>          <th>Type</th>
+          <th>Description</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+<td><code>Socket</code></td>            <td>
+                  <code><a class="autorefs autorefs-internal" title="            Socket (streampu._ext.core.Socket)" href="../core/#streampu._ext.core.Socket">Socket</a></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Modified socket.</p>
+              </div>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-class">
+
+
+
+<h3 id="streampu._uop.UType" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-class"></code>            <span class="doc doc-object-name doc-class-name">UType</span>
+
+
+<a href="#streampu._uop.UType" class="headerlink" title="Permanent link">&para;</a></h3>
+
+
+    <div class="doc doc-contents first">
+            <p class="doc doc-class-bases">
+              Bases: <code><span title="enum.Enum">Enum</span></code></p>
+
+
+
+        <p>Unary operator type enum.</p>
+
+
+
+
+
+
+
+
+
+
+
+<div class="doc doc-children">
+
+
+
+
+
+
+
+<div class="doc doc-object doc-attribute">
+
+
+
+<h4 id="streampu._uop.UType.ABS" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-attribute"></code>            <span class="doc doc-object-name doc-attribute-name">ABS</span>
+
+
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-class-attribute"><code>class-attribute</code></small>
+      <small class="doc doc-label doc-label-instance-attribute"><code>instance-attribute</code></small>
+  </span>
+
+<a href="#streampu._uop.UType.ABS" class="headerlink" title="Permanent link">&para;</a></h4>
+<div class="doc-signature highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="n">ABS</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+</span></code></pre></div>
+
+    <div class="doc doc-contents ">
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-attribute">
+
+
+
+<h4 id="streampu._uop.UType.NEG" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-attribute"></code>            <span class="doc doc-object-name doc-attribute-name">NEG</span>
+
+
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-class-attribute"><code>class-attribute</code></small>
+      <small class="doc doc-label doc-label-instance-attribute"><code>instance-attribute</code></small>
+  </span>
+
+<a href="#streampu._uop.UType.NEG" class="headerlink" title="Permanent link">&para;</a></h4>
+<div class="doc-signature highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="n">NEG</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+</span></code></pre></div>
+
+    <div class="doc doc-contents ">
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-attribute">
+
+
+
+<h4 id="streampu._uop.UType.NOT" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-attribute"></code>            <span class="doc doc-object-name doc-attribute-name">NOT</span>
+
+
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-class-attribute"><code>class-attribute</code></small>
+      <small class="doc doc-label doc-label-instance-attribute"><code>instance-attribute</code></small>
+  </span>
+
+<a href="#streampu._uop.UType.NOT" class="headerlink" title="Permanent link">&para;</a></h4>
+<div class="doc-signature highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="n">NOT</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+</span></code></pre></div>
+
+    <div class="doc doc-contents ">
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-attribute">
+
+
+
+<h4 id="streampu._uop.UType.CAST" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-attribute"></code>            <span class="doc doc-object-name doc-attribute-name">CAST</span>
+
+
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-class-attribute"><code>class-attribute</code></small>
+      <small class="doc doc-label doc-label-instance-attribute"><code>instance-attribute</code></small>
+  </span>
+
+<a href="#streampu._uop.UType.CAST" class="headerlink" title="Permanent link">&para;</a></h4>
+<div class="doc-signature highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="n">CAST</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+</span></code></pre></div>
+
+    <div class="doc doc-contents ">
+
+    </div>
+
+</div>
+
+
+
+
+
+
+  </div>
+
+    </div>
+
+</div><h2 id="reductions">Reductions<a class="headerlink" href="#reductions" title="Permanent link">&para;</a></h2>
+
+
+<div class="doc doc-object doc-function">
+
+
+<h3 id="streampu._red.sum" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-function"></code>            <span class="doc doc-object-name doc-function-name">sum</span>
+
+
+<a href="#streampu._red.sum" class="headerlink" title="Permanent link">&para;</a></h3>
+<div class="doc-signature highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="nf">sum</span><span class="p">(</span><span class="n">sckt</span><span class="p">:</span> <span class="n">Socket</span><span class="p">,</span> <span class="n">output_dtype</span><span class="p">:</span> <span class="n">dtype</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Socket</span>
+</span></code></pre></div>
+
+    <div class="doc doc-contents first">
+
+        <p>Compute the sum of a socket.</p>
+
+
+<p><span class="doc-section-title">Parameters:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Type</th>
+          <th>Description</th>
+          <th>Default</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td>
+                <code>sckt</code>
+            </td>
+            <td>
+                  <code><a class="autorefs autorefs-internal" title="            Socket (streampu._ext.core.Socket)" href="../core/#streampu._ext.core.Socket">Socket</a></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>input data</p>
+              </div>
+            </td>
+            <td>
+                <em>required</em>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>output_dtype</code>
+            </td>
+            <td>
+                  <code><a class="autorefs autorefs-internal" title="            dtype (streampu._ext.dtype)" href="../core/#streampu._ext.dtype">dtype</a></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>output dtype</p>
+              </div>
+            </td>
+            <td>
+                  <code>None</code>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+    <p><span class="doc-section-title">Returns:</span></p>
+    <table>
+      <thead>
+        <tr>
+<th>Name</th>          <th>Type</th>
+          <th>Description</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+<td><code>Socket</code></td>            <td>
+                  <code><a class="autorefs autorefs-internal" title="            Socket (streampu._ext.core.Socket)" href="../core/#streampu._ext.core.Socket">Socket</a></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>sum of the socket</p>
+              </div>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h3 id="streampu._red.prod" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-function"></code>            <span class="doc doc-object-name doc-function-name">prod</span>
+
+
+<a href="#streampu._red.prod" class="headerlink" title="Permanent link">&para;</a></h3>
+<div class="doc-signature highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="nf">prod</span><span class="p">(</span><span class="n">sckt</span><span class="p">:</span> <span class="n">Socket</span><span class="p">,</span> <span class="n">output_dtype</span><span class="p">:</span> <span class="n">dtype</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Socket</span>
+</span></code></pre></div>
+
+    <div class="doc doc-contents first">
+
+        <p>Compute the product of a socket values.</p>
+
+
+<p><span class="doc-section-title">Parameters:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Type</th>
+          <th>Description</th>
+          <th>Default</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td>
+                <code>sckt</code>
+            </td>
+            <td>
+                  <code><a class="autorefs autorefs-internal" title="            Socket (streampu._ext.core.Socket)" href="../core/#streampu._ext.core.Socket">Socket</a></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>input data</p>
+              </div>
+            </td>
+            <td>
+                <em>required</em>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>output_dtype</code>
+            </td>
+            <td>
+                  <code><a class="autorefs autorefs-internal" title="            dtype (streampu._ext.dtype)" href="../core/#streampu._ext.dtype">dtype</a></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>output dtype</p>
+              </div>
+            </td>
+            <td>
+                  <code>None</code>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+    <p><span class="doc-section-title">Returns:</span></p>
+    <table>
+      <thead>
+        <tr>
+<th>Name</th>          <th>Type</th>
+          <th>Description</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+<td><code>Socket</code></td>            <td>
+                  <code><a class="autorefs autorefs-internal" title="            Socket (streampu._ext.core.Socket)" href="../core/#streampu._ext.core.Socket">Socket</a></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>product of the socket values</p>
+              </div>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h3 id="streampu._red.all" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-function"></code>            <span class="doc doc-object-name doc-function-name">all</span>
+
+
+<a href="#streampu._red.all" class="headerlink" title="Permanent link">&para;</a></h3>
+<div class="doc-signature highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="nf">all</span><span class="p">(</span><span class="n">sckt</span><span class="p">:</span> <span class="n">Socket</span><span class="p">,</span> <span class="n">output_dtype</span><span class="p">:</span> <span class="n">dtype</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Socket</span>
+</span></code></pre></div>
+
+    <div class="doc doc-contents first">
+
+        <p>Return True if bool(x) is True for all values x in the socket.</p>
+
+
+<p><span class="doc-section-title">Parameters:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Type</th>
+          <th>Description</th>
+          <th>Default</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td>
+                <code>sckt</code>
+            </td>
+            <td>
+                  <code><a class="autorefs autorefs-internal" title="            Socket (streampu._ext.core.Socket)" href="../core/#streampu._ext.core.Socket">Socket</a></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>input data</p>
+              </div>
+            </td>
+            <td>
+                <em>required</em>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>output_dtype</code>
+            </td>
+            <td>
+                  <code><a class="autorefs autorefs-internal" title="            dtype (streampu._ext.dtype)" href="../core/#streampu._ext.dtype">dtype</a></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>output dtype</p>
+              </div>
+            </td>
+            <td>
+                  <code>None</code>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+    <p><span class="doc-section-title">Returns:</span></p>
+    <table>
+      <thead>
+        <tr>
+<th>Name</th>          <th>Type</th>
+          <th>Description</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+<td><code>Socket</code></td>            <td>
+                  <code><a class="autorefs autorefs-internal" title="            Socket (streampu._ext.core.Socket)" href="../core/#streampu._ext.core.Socket">Socket</a></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>True if bool(x) is True for all values x in the socket</p>
+              </div>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h3 id="streampu._red.any" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-function"></code>            <span class="doc doc-object-name doc-function-name">any</span>
+
+
+<a href="#streampu._red.any" class="headerlink" title="Permanent link">&para;</a></h3>
+<div class="doc-signature highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="nf">any</span><span class="p">(</span><span class="n">sckt</span><span class="p">:</span> <span class="n">Socket</span><span class="p">,</span> <span class="n">output_dtype</span><span class="p">:</span> <span class="n">dtype</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Socket</span>
+</span></code></pre></div>
+
+    <div class="doc doc-contents first">
+
+        <p>Return True if bool(x) is True for at least one values x in the socket.</p>
+
+
+<p><span class="doc-section-title">Parameters:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Type</th>
+          <th>Description</th>
+          <th>Default</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td>
+                <code>sckt</code>
+            </td>
+            <td>
+                  <code><a class="autorefs autorefs-internal" title="            Socket (streampu._ext.core.Socket)" href="../core/#streampu._ext.core.Socket">Socket</a></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>input data</p>
+              </div>
+            </td>
+            <td>
+                <em>required</em>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>output_dtype</code>
+            </td>
+            <td>
+                  <code><a class="autorefs autorefs-internal" title="            dtype (streampu._ext.dtype)" href="../core/#streampu._ext.dtype">dtype</a></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>output dtype</p>
+              </div>
+            </td>
+            <td>
+                  <code>None</code>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+    <p><span class="doc-section-title">Returns:</span></p>
+    <table>
+      <thead>
+        <tr>
+<th>Name</th>          <th>Type</th>
+          <th>Description</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+<td><code>Socket</code></td>            <td>
+                  <code><a class="autorefs autorefs-internal" title="            Socket (streampu._ext.core.Socket)" href="../core/#streampu._ext.core.Socket">Socket</a></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>True if bool(x) = True for at least one values x in the socket.</p>
+              </div>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h3 id="streampu._red.red" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-function"></code>            <span class="doc doc-object-name doc-function-name">red</span>
+
+
+<a href="#streampu._red.red" class="headerlink" title="Permanent link">&para;</a></h3>
+<div class="doc-signature highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="nf">red</span><span class="p">(</span><span class="n">red_type</span><span class="p">:</span> <span class="n">RType</span><span class="p">,</span> <span class="n">sckt</span><span class="p">:</span> <span class="n">Socket</span><span class="p">,</span> <span class="n">output_dtype</span><span class="p">:</span> <span class="n">dtype</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Socket</span>
+</span></code></pre></div>
+
+    <div class="doc doc-contents first">
+
+        <p>Reduce a socket content.</p>
+
+
+<p><span class="doc-section-title">Parameters:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Type</th>
+          <th>Description</th>
+          <th>Default</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td>
+                <code>red_type</code>
+            </td>
+            <td>
+                  <code><a class="autorefs autorefs-internal" title="            RType (streampu._red.RType)" href="#streampu._red.RType">RType</a></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Type of reduction</p>
+              </div>
+            </td>
+            <td>
+                <em>required</em>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>sckt</code>
+            </td>
+            <td>
+                  <code><a class="autorefs autorefs-internal" title="            Socket (streampu._ext.core.Socket)" href="../core/#streampu._ext.core.Socket">Socket</a></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Socket to reduce.</p>
+              </div>
+            </td>
+            <td>
+                <em>required</em>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>output_dtype</code>
+            </td>
+            <td>
+                  <code><a class="autorefs autorefs-internal" title="            dtype (streampu._ext.dtype)" href="../core/#streampu._ext.dtype">dtype</a></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>output data type</p>
+              </div>
+            </td>
+            <td>
+                  <code>None</code>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+    <p><span class="doc-section-title">Returns:</span></p>
+    <table>
+      <thead>
+        <tr>
+<th>Name</th>          <th>Type</th>
+          <th>Description</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+<td><code>Socket</code></td>            <td>
+                  <code><a class="autorefs autorefs-internal" title="            Socket (streampu._ext.core.Socket)" href="../core/#streampu._ext.core.Socket">Socket</a></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Reduced socket.</p>
+              </div>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-class">
+
+
+
+<h3 id="streampu._red.RType" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-class"></code>            <span class="doc doc-object-name doc-class-name">RType</span>
+
+
+<a href="#streampu._red.RType" class="headerlink" title="Permanent link">&para;</a></h3>
+
+
+    <div class="doc doc-contents first">
+            <p class="doc doc-class-bases">
+              Bases: <code><span title="enum.Enum">Enum</span></code></p>
+
+
+
+        <p>Reducer operator type enum.</p>
+
+
+
+
+
+
+
+
+
+
+
+<div class="doc doc-children">
+
+
+
+
+
+
+
+<div class="doc doc-object doc-attribute">
+
+
+
+<h4 id="streampu._red.RType.ADD" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-attribute"></code>            <span class="doc doc-object-name doc-attribute-name">ADD</span>
+
+
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-class-attribute"><code>class-attribute</code></small>
+      <small class="doc doc-label doc-label-instance-attribute"><code>instance-attribute</code></small>
+  </span>
+
+<a href="#streampu._red.RType.ADD" class="headerlink" title="Permanent link">&para;</a></h4>
+<div class="doc-signature highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="n">ADD</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+</span></code></pre></div>
+
+    <div class="doc doc-contents ">
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-attribute">
+
+
+
+<h4 id="streampu._red.RType.MUL" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-attribute"></code>            <span class="doc doc-object-name doc-attribute-name">MUL</span>
+
+
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-class-attribute"><code>class-attribute</code></small>
+      <small class="doc doc-label doc-label-instance-attribute"><code>instance-attribute</code></small>
+  </span>
+
+<a href="#streampu._red.RType.MUL" class="headerlink" title="Permanent link">&para;</a></h4>
+<div class="doc-signature highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="n">MUL</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+</span></code></pre></div>
+
+    <div class="doc doc-contents ">
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-attribute">
+
+
+
+<h4 id="streampu._red.RType.MIN" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-attribute"></code>            <span class="doc doc-object-name doc-attribute-name">MIN</span>
+
+
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-class-attribute"><code>class-attribute</code></small>
+      <small class="doc doc-label doc-label-instance-attribute"><code>instance-attribute</code></small>
+  </span>
+
+<a href="#streampu._red.RType.MIN" class="headerlink" title="Permanent link">&para;</a></h4>
+<div class="doc-signature highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="n">MIN</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+</span></code></pre></div>
+
+    <div class="doc doc-contents ">
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-attribute">
+
+
+
+<h4 id="streampu._red.RType.MAX" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-attribute"></code>            <span class="doc doc-object-name doc-attribute-name">MAX</span>
+
+
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-class-attribute"><code>class-attribute</code></small>
+      <small class="doc doc-label doc-label-instance-attribute"><code>instance-attribute</code></small>
+  </span>
+
+<a href="#streampu._red.RType.MAX" class="headerlink" title="Permanent link">&para;</a></h4>
+<div class="doc-signature highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="n">MAX</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+</span></code></pre></div>
+
+    <div class="doc doc-contents ">
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-attribute">
+
+
+
+<h4 id="streampu._red.RType.OR" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-attribute"></code>            <span class="doc doc-object-name doc-attribute-name">OR</span>
+
+
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-class-attribute"><code>class-attribute</code></small>
+      <small class="doc doc-label doc-label-instance-attribute"><code>instance-attribute</code></small>
+  </span>
+
+<a href="#streampu._red.RType.OR" class="headerlink" title="Permanent link">&para;</a></h4>
+<div class="doc-signature highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="n">OR</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+</span></code></pre></div>
+
+    <div class="doc doc-contents ">
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-attribute">
+
+
+
+<h4 id="streampu._red.RType.AND" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-attribute"></code>            <span class="doc doc-object-name doc-attribute-name">AND</span>
+
+
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-class-attribute"><code>class-attribute</code></small>
+      <small class="doc doc-label doc-label-instance-attribute"><code>instance-attribute</code></small>
+  </span>
+
+<a href="#streampu._red.RType.AND" class="headerlink" title="Permanent link">&para;</a></h4>
+<div class="doc-signature highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="n">AND</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+</span></code></pre></div>
+
+    <div class="doc doc-contents ">
+
+    </div>
+
+</div>
+
+
+
+
+
+
+  </div>
+
+    </div>
+
+</div><h2 id="minimum-and-maximum">Minimum and maximum<a class="headerlink" href="#minimum-and-maximum" title="Permanent link">&para;</a></h2>
+
+
+<div class="doc doc-object doc-function">
+
+
+<h3 id="streampu._minmax.min" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-function"></code>            <span class="doc doc-object-name doc-function-name">min</span>
+
+
+<a href="#streampu._minmax.min" class="headerlink" title="Permanent link">&para;</a></h3>
+<div class="doc-signature highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="nf">min</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">:</span> <span class="nb">tuple</span><span class="p">[</span><span class="n">Socket</span><span class="p">,</span> <span class="o">...</span><span class="p">],</span> <span class="n">output_dtype</span><span class="p">:</span> <span class="n">dtype</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Socket</span>
+</span></code></pre></div>
+
+    <div class="doc doc-contents first">
+
+        <p>Compute the componentwise minimum of inputs.</p>
+
+
+<p><span class="doc-section-title">Parameters:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Type</th>
+          <th>Description</th>
+          <th>Default</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td>
+                <code>*args</code>
+            </td>
+            <td>
+                  <code><span title="tuple">tuple</span>[<a class="autorefs autorefs-internal" title="            Socket (streampu._ext.core.Socket)" href="../core/#streampu._ext.core.Socket">Socket</a>, ...]</code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Tuple of sockets</p>
+              </div>
+            </td>
+            <td>
+                  <code>()</code>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>output_dtype</code>
+            </td>
+            <td>
+                  <code><a class="autorefs autorefs-internal" title="            dtype (streampu._ext.dtype)" href="../core/#streampu._ext.dtype">dtype</a></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>dtype of the output socket</p>
+              </div>
+            </td>
+            <td>
+                  <code>None</code>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+    <p><span class="doc-section-title">Returns:</span></p>
+    <table>
+      <thead>
+        <tr>
+<th>Name</th>          <th>Type</th>
+          <th>Description</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+<td><code>out</code></td>            <td>
+                  <code><a class="autorefs autorefs-internal" title="            Socket (streampu._ext.core.Socket)" href="../core/#streampu._ext.core.Socket">Socket</a></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>if *args has length 1, returns the minimum of the socket
+         if *args has length &gt; 1, returns the componentwize
+         minimum of all Sockets in args</p>
+              </div>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h3 id="streampu._minmax.max" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-function"></code>            <span class="doc doc-object-name doc-function-name">max</span>
+
+
+<a href="#streampu._minmax.max" class="headerlink" title="Permanent link">&para;</a></h3>
+<div class="doc-signature highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="nf">max</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">:</span> <span class="nb">tuple</span><span class="p">[</span><span class="n">Socket</span><span class="p">,</span> <span class="o">...</span><span class="p">],</span> <span class="n">output_dtype</span><span class="p">:</span> <span class="n">dtype</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Socket</span>
+</span></code></pre></div>
+
+    <div class="doc doc-contents first">
+
+        <p>Compute the componentwise maximum of inputs.</p>
+
+
+<p><span class="doc-section-title">Parameters:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Type</th>
+          <th>Description</th>
+          <th>Default</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td>
+                <code>*args</code>
+            </td>
+            <td>
+                  <code><span title="tuple">tuple</span>[<a class="autorefs autorefs-internal" title="            Socket (streampu._ext.core.Socket)" href="../core/#streampu._ext.core.Socket">Socket</a>, ...]</code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Tuple of sockets</p>
+              </div>
+            </td>
+            <td>
+                  <code>()</code>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>output_dtype</code>
+            </td>
+            <td>
+                  <code><a class="autorefs autorefs-internal" title="            dtype (streampu._ext.dtype)" href="../core/#streampu._ext.dtype">dtype</a></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>dtype of the output socket</p>
+              </div>
+            </td>
+            <td>
+                  <code>None</code>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+    <p><span class="doc-section-title">Returns:</span></p>
+    <table>
+      <thead>
+        <tr>
+<th>Name</th>          <th>Type</th>
+          <th>Description</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+<td><code>out</code></td>            <td>
+                  <code><a class="autorefs autorefs-internal" title="            Socket (streampu._ext.core.Socket)" href="../core/#streampu._ext.core.Socket">Socket</a></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>if *args has length 1, returns the maximum of the socket
+         if *args has length &gt; 1, returns the componentwize
+         maximum of all Sockets in args</p>
+              </div>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+    </div>
+
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+  <script>var tabs=__md_get("__tabs");if(Array.isArray(tabs))e:for(var set of document.querySelectorAll(".tabbed-set")){var labels=set.querySelector(".tabbed-labels");for(var tab of tabs)for(var label of labels.getElementsByTagName("label"))if(label.innerText.trim()===tab){var input=document.getElementById(label.htmlFor);input.checked=!0;continue e}}</script>
+
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+      
+      <nav class="md-footer__inner md-grid" aria-label="Footer" >
+        
+          
+          <a href="../sockets/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Sockets">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              <div class="md-ellipsis">
+                Sockets
+              </div>
+            </div>
+          </a>
+        
+        
+          
+          <a href="../modules/" class="md-footer__link md-footer__link--next" aria-label="Next: Modules">
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              <div class="md-ellipsis">
+                Modules
+              </div>
+            </div>
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11z"/></svg>
+            </div>
+          </a>
+        
+      </nav>
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["announce.dismiss", "content.action.edit", "content.action.view", "content.code.annotate", "content.code.copy", "content.tabs.link", "navigation.footer", "navigation.indexes", "navigation.sections"], "search": "../../assets/javascripts/workers/search.a7633da7.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.c21346df.min.js"></script>
+      
+    
+  </body>
+</html>
