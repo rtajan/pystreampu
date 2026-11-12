@@ -1,0 +1,53 @@
+% What streampu.If / Elif / Else build (docs/guides/control_flow.md). Build: scripts/build_figures.sh control_flow_branch
+\documentclass{standalone}
+\usepackage{ifthen}
+\usepackage{tikz}
+\usetikzlibrary{streampu}
+
+\begin{document}
+  \begin{tikzpicture}[background rectangle/.style={thick, draw=gray!60, fill=white, fill opacity=1.0, rounded corners=2px}, show background rectangle]
+    % tasks:                 id    coords        label            sin sout sfwd attributes
+    \task                    {t1}  {0.0, 0.0}    {initialize}     {0} {1}  {0}  {};
+    \task                    {c1}  {3.8, 2.4}    {x[0] > 10}      {1} {1}  {0}  {};
+    \task                    {c2}  {3.8,-2.6}    {x[0] > 5}       {1} {1}  {0}  {};
+    \commute                 {s1c} {7.6, 0.0}    {commute}        {2} {};
+    \task                    {p0}  {11.4, 1.6}   {x - 10}         {1} {1}  {0}  {};
+    \task                    {r1}  {11.4,-1.4}   {relay}          {1} {1}  {0}  {};
+    \commute                 {s2c} {14.8,-1.4}   {commute}        {2} {};
+    \task                    {p1}  {18.4,-0.2}   {x - 5}          {1} {1}  {0}  {};
+    \task                    {r2}  {18.4,-2.8}   {relay}          {1} {1}  {0}  {};
+    \task                    {p2}  {21.2,-2.8}   {x * 2}          {1} {1}  {0}  {};
+    \select                  {s2s} {24.4,-1.4}   {select}         {2} {};
+    \select                  {s1s} {27.6, 0.0}   {select}         {2} {};
+    \task                    {t8}  {30.6, 0.0}   {finalize}       {1} {0}  {0}  {};
+
+    % modules
+    \module {"s1c"} {m1} {Switcher (If)};
+    \module {"s1s"} {m1b} {Switcher (If)};
+    \module {"s2c"} {m2} {Switcher (Elif)};
+    \module {"s2s"} {m2b} {Switcher (Elif)};
+
+    % bindings
+    \draw [bind, thick] (t1_so1) -- ++(0.6,0) |- (c1_si1);
+    \draw [bind, thick] (t1_so1) -- ++(0.6,0) |- (c2_si1);
+    \draw [bind, thick] (t1_so1) -- (s1c_si1);
+    \draw [bind, thick] (c1_so1) -| ([xshift=-0.6cm]s1c_si2.west) -- (s1c_si2);
+    \draw [bind, thick] (s1c_so1) -- ++(0.5,0) |- (p0_si1);
+    \draw [bind, thick] (s1c_so2) -- ++(0.5,0) |- (r1_si1);
+    \draw [bind, thick] (r1_so1) -- (s2c_si1);
+    \draw [bind, thick] (c2_so1) -| ([xshift=-0.6cm]s2c_si2.west) -- (s2c_si2);
+    \draw [bind, thick] (s2c_so1) -- ++(0.5,0) |- (p1_si1);
+    \draw [bind, thick] (s2c_so2) -- ++(0.5,0) |- (r2_si1);
+    \draw [bind, thick] (r2_so1) -- (p2_si1);
+    \draw [bind, thick] (p1_so1) -| ([xshift=-0.5cm]s2s_si1.west) -- (s2s_si1);
+    \draw [bind, thick] (p2_so1) -| ([xshift=-0.5cm]s2s_si2.west) -- (s2s_si2);
+    \draw [bind, thick] (p0_so1) -| ([xshift=-0.5cm]s1s_si1.west) -- (s1s_si1);
+    \draw [bind, thick] (s2s_so1) -| ([xshift=-0.5cm]s1s_si2.west) -- (s1s_si2);
+    \draw [bind, thick] (s1s_so1) -- (t8_si1);
+
+    % labels
+    \node[soutlbl, anchor=south] at (p0.north) {If};
+    \node[soutlbl, anchor=south] at (p1.north) {Elif};
+    \node[soutlbl, anchor=south] at ([xshift=-1.4cm]p2.north) {Else};
+  \end{tikzpicture}
+\end{document}

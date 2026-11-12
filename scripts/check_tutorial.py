@@ -24,6 +24,7 @@ import traceback
 import numpy as np
 
 import streampu as spu
+from streampu._control_flow import _resolve
 
 CHECKS = []
 
@@ -531,6 +532,98 @@ def cpp_module(r: Report):
 # ---------------------------------------------------------------------------
 # Guides - Branches and loops
 # ---------------------------------------------------------------------------
+@check("guides/control_flow.md - If, Elif and Else; Switch, Case and Default")
+def control_flow_branch_switch(r: Report):
+    x = spu.array([8, 8, 8, 8], dtype=spu.int32)
+    with spu.If(x[0] > 10, x) as b:
+        b.value = x - 10
+    with spu.Elif(x[0] > 5) as b:
+        b.value = x - 5
+    with spu.Else() as b:
+        b.value = x * 2
+    r.compare("x after If / Elif / Else", _resolve(x).numpy, np.array([[3, 3, 3, 3]], dtype=np.int32))
+
+    mode = spu.array([2], dtype=spu.int32)
+    x = spu.array([10, 10, 10, 10], dtype=spu.int32)
+    with spu.Switch(mode, x) as sw:
+        with sw.Case(0):
+            sw.value = x + 1
+        with sw.Case(1, 2):
+            sw.value = x * 2
+        with sw.Default():
+            sw.value = x - 1
+    r.compare("x after the Switch", _resolve(x).numpy, np.array([[20, 20, 20, 20]], dtype=np.int32))
+
+
+@check("guides/control_flow.md - For; immediate mode and sequences")
+def control_flow_for(r: Report):
+    x = spu.array([0, 0, 0, 0], dtype=spu.int32)
+    inc = spu.incrementer(4, dtype=spu.int32)
+    with spu.For(10, x) as loop:
+        loop.next = inc.increment(x)
+    r.compare("x after the For", _resolve(x).numpy, np.array([[10, 10, 10, 10]], dtype=np.int32))
+
+    x = spu.array([6, 6, 6, 6], dtype=spu.int32)
+    with spu.For(6, x) as loop:
+        with spu.If((x[0] & 1) == 0, x) as b:
+            b.value = x / 2
+        with spu.Else() as b:
+            b.value = x * 3 + 1
+        loop.next = x
+    r.compare("Collatz, 6 steps from 6", _resolve(x).numpy, np.array([[4, 4, 4, 4]], dtype=np.int32))
+
+    ini = spu.initializer(4, dtype=spu.int32)
+    fin = spu.finalizer(4, dtype=spu.int32)
+    with spu.sequence(n_threads=4) as seq:
+        x = ini.initialize()
+        with spu.If(x[0] > 10, x) as b:
+            b.value = x - 10
+        fin.finalize(x)
+    ini.data_init[0][:] = 15
+    seq.exec_seq()
+    r.compare("fin.final_data[0]", list(fin.final_data[0]), [5, 5, 5, 5])
+
+
+@check("guides/control_flow.md - While and DoWhile; nesting the structures")
+def control_flow_while(r: Report):
+    x = spu.array([5, 5, 5, 5], dtype=spu.int32)
+    with spu.While(lambda v: v[0] < 100, x) as loop:
+        loop.next = x * 2 + 1
+    r.compare("While, x * 2 + 1 from 5", _resolve(x).numpy, np.array([[191] * 4], dtype=np.int32))
+
+    x = spu.array([0, 0, 0, 0], dtype=spu.int32)
+    with spu.While(lambda v: v[0] < 100, x, max_iter=3):
+        x += 1
+    r.compare("While with max_iter=3", _resolve(x).numpy, np.array([[3] * 4], dtype=np.int32))
+
+    x = spu.array([5, 5, 5, 5], dtype=spu.int32)
+    with spu.DoWhile(lambda v: v[0] < 3, x) as loop:
+        loop.next = x * 2 + 1
+    r.compare("DoWhile, body executed once", _resolve(x).numpy, np.array([[11] * 4], dtype=np.int32))
+
+    x = spu.array([6, 6, 6, 6], dtype=spu.int32)
+    with spu.While(lambda v: v[0] != 1, x, max_iter=1000) as loop:
+        with spu.If((x[0] & 1) == 0, x) as b:
+            b.value = x / 2
+        with spu.Else() as b:
+            b.value = x * 3 + 1
+        loop.next = x
+    r.compare("Collatz until 1 from 6", _resolve(x).numpy, np.array([[1] * 4], dtype=np.int32))
+
+
+@check("guides/control_flow.md - Several variables")
+def control_flow_several_variables(r: Report):
+    x = spu.array([0, 0, 0, 0], dtype=spu.int32)
+    y = spu.array([1.0, 1.0], dtype=spu.float64)
+    with spu.While(lambda a, b: a[0] < 10, x, y):
+        x += 3
+        y *= 2.0
+    with spu.If(x[0] > 10, x, y) as b:
+        b.value = (x - 10, y + 0.5)
+    r.compare("x", _resolve(x).numpy, np.array([[2, 2, 2, 2]], dtype=np.int32))
+    r.compare("y", _resolve(y).numpy, np.array([[16.5, 16.5]]))
+
+
 @check("guides/control_flow.md - Exclusive paths")
 def control_flow_switch(r: Report):
     N = 4

@@ -5,7 +5,7 @@ from typing import List
 
 from streampu._ext import exceptions
 from streampu._ext.core import Socket, Task
-from streampu._graph_builder import _GraphBuilder, _index
+from streampu._graph_builder import _GraphBuilder, _index, _order_firsts
 from streampu._sequence import Sequence
 
 
@@ -82,7 +82,7 @@ class SequenceBuilder(_GraphBuilder):
                 has_consumer.add(id(p))
 
         # first: no producer; last: no consumer in the block
-        firsts = [t for t in tasks if not self._producers(t)]
+        firsts = _order_firsts([t for t in tasks if not self._producers(t)])
         lasts = [t for t in tasks if id(t) not in has_consumer]
         # tasks out of the block bound to the tasks of the block (e.g. by an earlier description):
         # the exploration must not enter them

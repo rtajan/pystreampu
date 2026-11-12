@@ -3,9 +3,12 @@ from __future__ import annotations
 
 from typing import List, Union, overload
 
+from streampu._ext import arr as _arr
 from streampu._ext import exceptions
 from streampu._ext.core import Socket, Task, _Sequence
 from streampu._ext.set import Set
+
+_ARRAY_CLASSES = tuple(c for c in vars(_arr).values() if isinstance(c, type) and c.__name__.startswith("Array_"))
 
 
 def _unique(in_list: list):
@@ -54,16 +57,24 @@ def _get_firsts(s: Socket):
 
 def _bound_sockets(tsk: Task) -> List[Socket]:
     """Output sockets bound to the input and forward sockets of a task."""
+    # `get_bound_socket` raises an exception for a socket that is not bound, which is slow
+    # (the C++ exception builds a stack trace): the unbound sockets are skipped beforehand. An
+    # input or forward socket has data only when it is bound, except the forward socket of an
+    # array (`Array.read`), which holds the data of the array.
+    if isinstance(tsk.module, _ARRAY_CLASSES):
+        return []
     bound = []
     for sckt in list(tsk.inputs) + list(tsk.forwards):
+        if not sckt.has_data():
+            continue
         try:
             bound.append(sckt.get_bound_socket())
-        except Exception:  # not bound (e.g. the forward socket of an array)
+        except Exception:  # not bound
             pass
     return bound
 
 
-def _firsts_upstream(tasks: List[Task], stop: List[Task]) -> List[Task]:
+def _firsts_upstream(tasks: List[Task], stop: List[Task], constants_only: bool = True) -> List[Task]:
     """Constants that feed `tasks`, found by following the bindings backwards.
 
     A constant is a task with a forward socket and without input, such as `Array.read`
@@ -75,6 +86,8 @@ def _firsts_upstream(tasks: List[Task], stop: List[Task]) -> List[Task]:
     Args:
         tasks (list[Task]): tasks to start from
         stop (list[Task]): tasks where the exploration stops
+        constants_only (bool): only return the constants; if False, return all the tasks
+            without input (sources...)
 
     Returns:
         out (list[Task]): the constants found
@@ -89,7 +102,7 @@ def _firsts_upstream(tasks: List[Task], stop: List[Task]) -> List[Task]:
         visited.append(tsk)
         bound = _bound_sockets(tsk)
         if len(tsk.inputs) == 0 and len(bound) == 0:
-            if not tsk.is_bound() and len(tsk.forwards) > 0:
+            if not tsk.is_bound() and (not constants_only or len(tsk.forwards) > 0):
                 found.append(tsk)
         else:
             pending += [s.task for s in bound]

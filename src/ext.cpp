@@ -96,6 +96,9 @@ PYBIND11_MODULE(_ext, m, py::mod_gil_not_used())
     py::module_ submod_sli = m.def_submodule("sli");
     pyspu::wrapper::wrap_slicer(submod_sli);
 
+    py::module_ submod_gat = m.def_submodule("gat");
+    pyspu::wrapper::wrap_gatherer(submod_gat);
+
     py::module_ submod_sts = m.def_submodule("sts");
     pyspu::wrapper::wrap_stateless(submod_sts); // TODO : change python submodule
 

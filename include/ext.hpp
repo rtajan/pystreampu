@@ -45,6 +45,7 @@
 #include "wrapper/Module/Stateful/Sink/Sink.hpp"
 #include "wrapper/Module/Stateful/Sleeper/Sleeper.hpp"
 #include "wrapper/Module/Stateful/Slicer/Slicer.hpp"
+#include "wrapper/Module/Stateful/Gatherer/Gatherer.hpp"
 #include "wrapper/Module/Stateful/Source/Random/Source_random.hpp"
 #include "wrapper/Module/Stateful/Source/Source.hpp"
 #include "wrapper/Module/Stateful/Source/User/Source_user.hpp"
