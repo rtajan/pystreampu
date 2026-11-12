@@ -260,14 +260,11 @@ def parallel_pipeline(r: Report):
         sink = spu.sink_user_binary(data_length, out_path, dtype=spu.uint8)
         rlys = [spu.relayer(data_length, ns=5000, dtype=spu.uint8) for _ in range(6)]
 
-        spu.Task.call_auto_exec = False
-        try:
+        with spu.bind_only():
             data, count = source.generate()
             for rly in rlys:
                 data = rly.relay(data)
             sink.send_count(data, count)
-        finally:
-            spu.Task.call_auto_exec = True
 
         pipeline = spu.Pipeline(
             [source.generate],
@@ -479,8 +476,7 @@ def profiling_stats(r: Report):
 
 @check("guides/profiling.md - Reporting values with probes")
 def profiling_probes(r: Report):
-    spu.Task.call_auto_exec = False
-    try:
+    with spu.bind_only():
         count = spu.array([0], dtype=spu.int32)
         count += 1
 
@@ -495,8 +491,6 @@ def profiling_probes(r: Report):
         prb_exec.probe.bind(count)
         prb_time()
         prb_time.probe.bind(count)
-    finally:
-        spu.Task.call_auto_exec = True
 
     terminal = spu.Terminal_dump([reporter])
     seq = spu.Sequence(count)

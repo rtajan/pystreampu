@@ -17,6 +17,10 @@
         - sequence
         - tasks
 
+## Describing a graph without executing it
+
+::: streampu._task.bind_only
+
 ## Pipeline
 
 ::: streampu._pipeline.Pipeline

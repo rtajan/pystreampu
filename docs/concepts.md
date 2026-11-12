@@ -120,8 +120,8 @@ to Python between the tasks.
 Two consequences:
 
 - the first execution, when the graph is described, comes on top of those of the
-  sequence. To only describe the graph, disable it with `spu.Task.call_auto_exec =
-  False` or `auto_exec=False`;
+  sequence. To only describe the graph, call the tasks in a `with spu.bind_only():`
+  block or pass `auto_exec=False`;
 - in-place operations (`+=`, forward sockets) are replayed on data that has already
   been modified (see
   [A sequence replays the graph](tutorial/sequence.md#a-sequence-replays-the-graph)).

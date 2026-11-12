@@ -72,9 +72,16 @@ By default, calling a task executes it. To only bind the sockets, pass `auto_exe
 ```python
 >>> out = inc.increment(out_data, auto_exec=False)
 ```
-You can also disable the automatic execution for every call by setting
-`spu.Task.call_auto_exec = False`, which is convenient when you only want to describe a
-graph that will be executed later by a [Sequence](sequence.md).
+To describe a whole graph that will be executed later by a [Sequence](sequence.md), call
+the tasks in a `with spu.bind_only()` block: no call executes its task, and the automatic
+execution is restored at the end of the block, even if an exception is raised:
+```python
+>>> with spu.bind_only():
+...     out_data, out_count = src.generate()
+...     out = inc.increment(out_data)
+```
+The block only sets `spu.Task.call_auto_exec` to `False` and restores its previous value
+afterwards; unlike `spu.sequence()`, it does not build any runtime.
 
 ## Calling a task with no input sockets
 In the previous example, we have seen how to call a task with input sockets. However, we can also call a task with no input sockets. In this case, we can simply call the task as a method of the module without any arguments. For example, if we want to call the `generate` task of the `src` module, we can do it as follows:

@@ -3,7 +3,8 @@
 
 from __future__ import annotations
 
-from typing import Any, Union
+from contextlib import contextmanager
+from typing import Any, Iterator, Union
 
 import numpy as np
 
@@ -13,6 +14,33 @@ from streampu._ext.core import Socket, Task
 from streampu._typing import SocketLike
 
 Task.call_auto_exec = True
+
+
+@contextmanager
+def bind_only() -> Iterator[None]:
+    """Describe a graph without executing it, in a `with streampu.bind_only()` block.
+
+    Inside the block, calling a task only binds its input sockets and returns its output
+    sockets: the task is not executed (`Task.call_auto_exec` is False, as in the
+    `streampu.sequence()` and `streampu.pipeline()` blocks). The previous value of
+    `Task.call_auto_exec` is restored at the end of the block, even if an exception is
+    raised, so the blocks can be nested.
+
+    Unlike `streampu.sequence()` and `streampu.pipeline()`, no runtime is built: use it to
+    bind tasks that are executed later, by a `Sequence` built separately or by the user.
+
+    Examples:
+        >>> with streampu.bind_only():
+        ...     data, count = src.generate()
+        ...     snk.send_count(inc.increment(data), count)
+        >>> seq = streampu.Sequence(src.generate)
+    """
+    saved = Task.call_auto_exec
+    Task.call_auto_exec = False
+    try:
+        yield
+    finally:
+        Task.call_auto_exec = saved
 
 
 def _setattr_impl(self: Task, attr: str, value: Any) -> Union[tuple, Socket, None]:

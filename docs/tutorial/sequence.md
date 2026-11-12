@@ -23,9 +23,9 @@ sockets and it **executes** the task once. After these lines, `src.generate` and
 `inc.increment` are bound together: they form a graph.
 
 !!! tip
-    If you only want to describe the graph, without executing anything, set
-    `spu.Task.call_auto_exec = False` before calling the tasks, or pass
-    `auto_exec=False` to each call (see [Going further](going_further.md)).
+    If you only want to describe the graph, without executing anything, call the
+    tasks in a `with spu.bind_only():` block, or pass `auto_exec=False` to each call
+    (see [Going further](going_further.md)).
 
 ## Build the Sequence
 

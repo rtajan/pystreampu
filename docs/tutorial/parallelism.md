@@ -222,12 +222,11 @@ last tasks and the excluded tasks of each stage then have to be given by hand. T
 is described with the automatic execution disabled:
 
 ```python
-spu.Task.call_auto_exec = False   # describe the graph without executing it
-data, count = source.generate()
-for rly in rlys:
-    data = rly.relay(data)
-sink.send_count(data, count)
-spu.Task.call_auto_exec = True
+with spu.bind_only():   # describe the graph without executing it
+    data, count = source.generate()
+    for rly in rlys:
+        data = rly.relay(data)
+    sink.send_count(data, count)
 
 pipeline = spu.Pipeline(
     [source.generate],    # first tasks of the graph

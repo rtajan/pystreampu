@@ -93,24 +93,21 @@ and its value is reported, together with the execution number and the elapsed ti
 ```python
 import streampu as spu
 
-spu.Task.call_auto_exec = False      # describe the graph without executing it
+with spu.bind_only():                    # describe the graph without executing it
+    count = spu.array([0], dtype=spu.int32)
+    count += 1                           # incremented at each execution
 
-count = spu.array([0], dtype=spu.int32)
-count += 1                           # incremented at each execution
+    reporter = spu.Reporter_probe("Counter", "A simple example")
+    prb_exec = spu.Probe_occurrence("Exec.", reporter)
+    prb_count = spu.probe_value(1, "Count", reporter, spu.int32)
+    prb_time = spu.Probe_time("Time", reporter)
+    prb_time.set_col_unit("(s)")
 
-reporter = spu.Reporter_probe("Counter", "A simple example")
-prb_exec = spu.Probe_occurrence("Exec.", reporter)
-prb_count = spu.probe_value(1, "Count", reporter, spu.int32)
-prb_time = spu.Probe_time("Time", reporter)
-prb_time.set_col_unit("(s)")
-
-prb_count(count)                     # the value probe reads the socket
-prb_exec()                           # the other probes have no input socket:
-prb_exec.probe.bind(count)           # bind their task to the graph so that they
-prb_time()                           # are part of the sequence
-prb_time.probe.bind(count)
-
-spu.Task.call_auto_exec = True
+    prb_count(count)                     # the value probe reads the socket
+    prb_exec()                           # the other probes have no input socket:
+    prb_exec.probe.bind(count)           # bind their task to the graph so that they
+    prb_time()                           # are part of the sequence
+    prb_time.probe.bind(count)
 
 terminal = spu.Terminal_dump([reporter])
 seq = spu.Sequence(count)
