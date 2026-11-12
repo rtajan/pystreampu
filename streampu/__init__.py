@@ -58,6 +58,7 @@ from ._bop import (
     not_equal,
     sub,
 )
+from ._control_flow import DoWhile, Elif, Else, For, If, Switch, While
 from ._delayer import delayer
 from ._dtype import (
     dtype,

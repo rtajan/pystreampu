@@ -32,6 +32,91 @@ def _index(tasks: List[Task], tsk: Task) -> int:
     return -1
 
 
+def _is_constant(tsk: Task) -> bool:
+    """A constant: a task without input whose value is in a forward socket (`Array.read`)."""
+    return len(tsk.inputs) == 0 and len(tsk.forwards) > 0
+
+
+def _consumers_of(tsk: Task) -> List[Task]:
+    """Tasks bound to the output and forward sockets of `tsk`."""
+    out: List[Task] = []
+    for sckt in list(tsk.outputs) + list(tsk.forwards):
+        try:
+            bound = sckt.get_bound_sockets()
+        except Exception:
+            continue
+        out += [s.task for s in bound]
+    return out
+
+
+# The functions below index the tasks by `id()`. pybind11 creates the Python object of a task
+# when it is returned and frees it when it is no longer referenced, so that another task can get
+# the same `id()`: the tasks are kept in the dictionaries themselves while they are indexed.
+
+
+def _downstream(tsk: Task, memo: Dict[int, tuple]) -> Dict[int, Task]:
+    """Tasks reachable from `tsk` by following the data bindings, indexed by `id()`."""
+    key = id(tsk)
+    if key not in memo:
+        seen: Dict[int, Task] = {}
+        pending = _consumers_of(tsk)
+        while pending:
+            t = pending.pop()
+            if id(t) not in seen:
+                seen[id(t)] = t
+                pending += _consumers_of(t)
+        memo[key] = (tsk, seen)
+    return memo[key][1]
+
+
+def _loop_back(tsk: Task, down: Dict[int, tuple]) -> Dict[int, Task]:
+    """Tasks whose bindings to `tsk` close a loop, indexed by `id()` (empty if `tsk` is not a loop head).
+
+    The cycles of a StreamPU graph go through the head of a loop: the `select` of a `Switcher`
+    whose `commute` is after it. Its inputs bound to tasks after it come back from the body.
+    """
+    if tsk.name != "select" or tsk.module.__class__.__name__ != "Switcher":
+        return {}
+    after = _downstream(tsk, down)
+    commute = [t for t in tsk.module.tasks if t.name == "commute"]
+    if not commute or id(commute[0]) not in after:
+        return {}  # the select that merges the paths of a branch
+    return after
+
+
+def _depth(tsk: Task, memo: Dict[int, tuple], down: Dict[int, tuple]) -> int:
+    """Length of the longest chain of data bindings that leads to `tsk` (loops are cut)."""
+    key = id(tsk)
+    if key not in memo:
+        memo[key] = (tsk, 0)  # in case of a cycle not closed by a loop head
+        back = _loop_back(tsk, down)
+        depth = 0
+        for s in _bound_sockets(tsk):
+            if id(s.task) not in back:
+                depth = max(depth, _depth(s.task, memo, down) + 1)
+        memo[key] = (tsk, depth)
+    return memo[key][1]
+
+
+def _order_firsts(firsts: List[Task]) -> List[Task]:
+    """Order the first tasks of a sequence: the constants first, the deepest used first.
+
+    StreamPU explores the graph from the first tasks, in their order, and enters a task when
+    all its inputs have been explored. A constant used in a path of a `Switcher` (the `10` of
+    `x - 10`) has to be explored before the path is reached: otherwise the task that uses it is
+    put in a wrong part of the sequence (wrong results, or a crash).
+    """
+    memo: Dict[int, tuple] = {}
+    down: Dict[int, tuple] = {}
+
+    def consumers_depth(tsk: Task) -> int:
+        return max([_depth(t, memo, down) for t in _consumers_of(tsk)], default=0)
+
+    constants = [t for t in firsts if _is_constant(t)]
+    constants.sort(key=consumers_depth, reverse=True)  # stable: creation order for the ties
+    return constants + [t for t in firsts if not _is_constant(t)]
+
+
 class _BuilderScope(_Context):
     """A context opened by a graph builder (the builder itself, or a pipeline stage)."""
 
@@ -58,6 +143,10 @@ class _GraphBuilder(_BuilderScope):
     def __enter__(self):
         if self._entered:
             raise exceptions.RuntimeError(f"A 'streampu.{self._KIND}' can be described only once.")
+        if getattr(_context_manager.current_context, "_is_control_flow", False):
+            raise exceptions.RuntimeError(
+                f"'streampu.{self._KIND}' cannot be opened inside a control flow block (If, Switch, For...)."
+            )
         if isinstance(_context_manager.current_context, _BuilderScope):
             raise exceptions.RuntimeError(
                 "'streampu.pipeline' and 'streampu.sequence' blocks cannot be nested "

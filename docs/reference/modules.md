@@ -52,6 +52,40 @@ depends on the data type.
 
 See the guide [Branches and loops](../guides/control_flow.md).
 
+::: streampu._control_flow.If
+    options:
+      members: false
+
+::: streampu._control_flow.Elif
+    options:
+      members: false
+
+::: streampu._control_flow.Else
+    options:
+      members: false
+
+::: streampu._control_flow.Switch
+    options:
+      members:
+        - Case
+        - Default
+        - value
+
+::: streampu._control_flow.For
+    options:
+      members:
+        - next
+
+::: streampu._control_flow.While
+    options:
+      members:
+        - next
+
+::: streampu._control_flow.DoWhile
+    options:
+      members:
+        - next
+
 ::: streampu._ext.swi.Switcher
 
 ::: streampu._ext.ctl.Controller
@@ -69,6 +103,10 @@ See the guide [Branches and loops](../guides/control_flow.md).
 ::: streampu._ext.set.Set
 
 ::: streampu._ext.slp.Sleeper
+
+::: streampu._ext.gat.Gatherer
+
+::: streampu._ext.gat.Scatterer
 
 ## Probes, reporters and terminals
 

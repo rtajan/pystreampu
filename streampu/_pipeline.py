@@ -4,7 +4,15 @@ from typing import Dict, List, Optional, Tuple
 from streampu._context_manager import _context_manager
 from streampu._ext import exceptions
 from streampu._ext.core import Task, _Pipeline
-from streampu._graph_builder import _BuilderScope, _GraphBuilder, _index, _task_label
+from streampu._ext.swi import Switcher
+from streampu._graph_builder import (
+    _BuilderScope,
+    _GraphBuilder,
+    _index,
+    _order_firsts,
+    _task_label,
+)
+from streampu._relayer import relayer
 
 
 class Pipeline(_Pipeline):
@@ -95,6 +103,34 @@ class Pipeline(_Pipeline):
             modules = stage.get_modules(module_class, set_modules)
             return_list.extend(modules)
         return return_list
+
+
+def _relay_switchers_between_stages(stages_tasks: List[List[Task]]) -> None:
+    """Add a relayer after an output of a `Switcher` that goes to another stage.
+
+    StreamPU crashes when it builds a pipeline in which an output of `select` (the end of a
+    `If` chain or a `Switch`) or of `commute` (the exit of a `For`) is directly sent to another
+    stage: a relayer (a copy) is put between them, in the stage of the `Switcher`.
+    """
+    stage_of = {id(t): k for k, tasks in enumerate(stages_tasks) for t in tasks}
+    for k, tasks in enumerate(stages_tasks):
+        for tsk in list(tasks):
+            if not isinstance(tsk.module, Switcher):
+                continue
+            n_frames = max(1, int(tsk.module.n_frames))
+            for out in tsk.outputs:
+                if out.name == "status":
+                    continue
+                others = [s for s in out.get_bound_sockets() if stage_of.get(id(s.task), k) != k]
+                if not others:
+                    continue
+                rly = relayer(out.n_elmts // n_frames, ns=0, dtype=out.dtype)
+                rly.n_frames = n_frames
+                rly.relay["in"].bind(out)
+                for s in others:
+                    s.unbind(out)
+                    s.bind(rly.relay["out"])
+                tasks.insert(tasks.index(tsk) + 1, rly.relay)
 
 
 class Stage(_BuilderScope):
@@ -221,6 +257,7 @@ class PipelineBuilder(_GraphBuilder):
         # tasks without input declared outside of the stages (e.g. a constant created before the
         # pipeline): put them at the beginning of the stage of their first consumer
         stages_tasks = self._attach_sources([stg.tasks for stg in self._stages])
+        _relay_switchers_between_stages(stages_tasks)
         stage_of: Dict[int, int] = {}
         for k, tasks in enumerate(stages_tasks):
             for t in tasks:
@@ -241,9 +278,9 @@ class PipelineBuilder(_GraphBuilder):
         for k, tasks in enumerate(stages_tasks):
             # first: no producer, or at least one producer out of the stage (the C++ exploration
             # only enters a task when all its inputs are fed from the stage)
-            firsts = [
-                t for t in tasks if not self._producers(t) or any(stage_of[id(p)] != k for p in self._producers(t))
-            ]
+            firsts = _order_firsts(
+                [t for t in tasks if not self._producers(t) or any(stage_of[id(p)] != k for p in self._producers(t))]
+            )
             # last: no consumer in the stage
             lasts = [t for t in tasks if not any(stage_of[id(c)] == k for c in consumers.get(id(t), []))]
             # consumers out of the stage: the exploration must not enter them
@@ -254,7 +291,7 @@ class PipelineBuilder(_GraphBuilder):
                         exclusions.append(c)
             sep_stages.append([firsts, lasts, exclusions])
 
-        self._pipeline_firsts = [t for t in all_tasks if not self._producers(t)]
+        self._pipeline_firsts = _order_firsts([t for t in all_tasks if not self._producers(t)])
         self._pipeline_lasts = [t for t in all_tasks if id(t) not in consumers]
         self._sep_stages = sep_stages
 

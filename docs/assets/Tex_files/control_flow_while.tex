@@ -1,0 +1,49 @@
+% What streampu.While and streampu.DoWhile build (docs/guides/control_flow.md). Build: scripts/build_figures.sh control_flow_while
+\documentclass{standalone}
+\usepackage{ifthen}
+\usepackage{tikz}
+\usetikzlibrary{streampu}
+
+\begin{document}
+  \begin{tikzpicture}[background rectangle/.style={thick, draw=gray!60, fill=white, fill opacity=1.0, rounded corners=2px}, show background rectangle]
+    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+    %% While: the condition is computed on the value at the head of the loop %%
+    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+    \task                    {a1}  {0.0, 0.0}    {initialize}      {0} {1}  {0}  {};
+    \select                  {a2}  {3.6, 0.0}    {select}          {2} {};
+    \task                    {a3}  {7.2,-1.6}    {v[0] < 100}      {1} {1}  {0}  {};
+    \commute                 {a4}  {10.8, 0.0}   {commute}         {2} {};
+    \task                    {a5}  {14.4, 1.6}   {x * 2 + 1}       {1} {1}  {0}  {};
+    \task                    {a6}  {14.4,-1.0}   {finalize}        {1} {0}  {0}  {};
+    \draw [bind, thick] (a1_so1) -| ([xshift=-0.5cm]a2_si2.west) -- (a2_si2);
+    \draw [bind, thick] (a2_so1) -- (a4_si1);
+    \draw [bind, thick] (a2_so1) -- ++(0.5,0) |- (a3_si1);
+    \draw [bind, thick] (a3_so1) -| ([xshift=-0.5cm]a4_si2.west) -- (a4_si2);
+    \draw [bind, thick] (a4_so1) -- ++(0.5,0) |- (a5_si1);
+    \draw [bind, thick] (a5_so1) -- ++(0.5,0) |- ([yshift=0.9cm]a5.north) -| ([xshift=-0.9cm]a2_si1.west) -- (a2_si1);
+    \draw [bind, thick] (a4_so2) -- ++(0.5,0) |- (a6_si1);
+    \node[font=\bfseries, anchor=west] at (-1.2, 2.9) {While};
+    \node[soutlbl, anchor=south] at (a5.north) {body};
+    \node[soutlbl, anchor=north west] at ([xshift=0.6cm]a4_so2.south east) {exit};
+
+    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+    %% DoWhile: the body comes first, the condition is computed on its value %%
+    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+    \task                    {b1}  {0.0,-6.0}    {initialize}      {0} {1}  {0}  {};
+    \select                  {b2}  {3.6,-6.0}    {select}          {2} {};
+    \task                    {b3}  {7.2,-6.0}    {x * 2 + 1}       {1} {1}  {0}  {};
+    \task                    {b4}  {10.8,-7.6}   {v[0] < 100}      {1} {1}  {0}  {};
+    \commute                 {b5}  {14.4,-6.0}   {commute}         {2} {};
+    \task                    {b6}  {17.8,-7.0}   {finalize}        {1} {0}  {0}  {};
+    \draw [bind, thick] (b1_so1) -| ([xshift=-0.5cm]b2_si2.west) -- (b2_si2);
+    \draw [bind, thick] (b2_so1) -- (b3_si1);
+    \draw [bind, thick] (b3_so1) -- (b5_si1);
+    \draw [bind, thick] (b3_so1) -- ++(0.5,0) |- (b4_si1);
+    \draw [bind, thick] (b4_so1) -| ([xshift=-0.5cm]b5_si2.west) -- (b5_si2);
+    \draw [bind, thick] (b5_so1) -- ++(0.5,0) |- ([yshift=0.9cm]b3.north) -| ([xshift=-0.9cm]b2_si1.west) -- (b2_si1);
+    \draw [bind, thick] (b5_so2) -- ++(0.5,0) |- (b6_si1);
+    \node[font=\bfseries, anchor=west] at (-1.2,-3.6) {DoWhile};
+    \node[soutlbl, anchor=south] at (b3.north) {body};
+    \node[soutlbl, anchor=north west] at ([xshift=0.6cm]b5_so2.south east) {exit};
+  \end{tikzpicture}
+\end{document}

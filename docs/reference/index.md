@@ -9,7 +9,7 @@ package, generated from their docstrings. For explanations and examples, see the
 | [Core classes](core.md) | `Socket`, `Task`, `Module`, data types, exceptions |
 | [Sockets](sockets.md) | creating sockets, data types |
 | [Operators](operators.md) | arithmetic, comparison, bitwise and unary operators, reductions |
-| [Modules](modules.md) | `Stateless`, `Stateful`, `Stateful_core`, `numba_codelet`, Julia modules, built-in modules, control flow, probes, reporters |
+| [Modules](modules.md) | `Stateless`, `Stateful`, `Stateful_core`, `numba_codelet`, Julia modules, built-in modules, control flow (`If`, `Switch`, `For`, `While`, `Switcher`…), probes, reporters |
 | [Execution](execution.md) | `Sequence`, `sequence`, `Pipeline`, `pipeline` and `stage` |
 | [Tools](tools.md) | helpers to build C++ extensions |
 
